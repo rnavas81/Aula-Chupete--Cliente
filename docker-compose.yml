@@ -1,0 +1,22 @@
+# Fichero de configuración para los contenedores del cliente
+version: "3.8"
+services:
+  # Contenedor para la aplicación del cliente
+  ei-cliente:
+    # La imagen del contenedor se construye sobre una adecuando las necesidades
+    build: .
+    # Nombre asignado al contenedor
+    container_name: ei-cliente
+    # Puerto abierto para el acceso
+    ports:
+      - 1001:4200
+    # Para la versión de desarrollo se mapea la carpeta con una local
+    volumes:
+      - .:/usr/src/app
+    # Red para la aplicación
+    networks:
+      - escuela-infantil
+
+networks:
+  escuela-infantil:
+    driver: bridge
