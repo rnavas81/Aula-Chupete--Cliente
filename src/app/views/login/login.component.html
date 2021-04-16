@@ -1,0 +1,47 @@
+<div class="container-md">
+  <div class="row vh-100 justify-content-center justify-content-md-end align-content-center">
+    <div class="col-lg-4 col-md-6">
+      <form class="align-self-center" [formGroup]="formulario" (ngSubmit)="onSubmit()">
+        <div *ngIf="mensaje.length>0" class="form-outline">
+          <span class="text-danger">{{mensaje}}</span>
+        </div>
+        <div class="form-outline mb-2">
+          <label for="user">Dirección de correo</label>
+          <div class="input-group has-validation">
+            <span class="input-group-text form-row"><i class="fa fa-user"></i></span>
+            <input type="email" class="form-control" formControlName="email" id-test="email"
+              placeholder="Dirección de correo" autofocus />
+          </div>
+          <span *ngIf="!this.formulario.controls['email'].valid" class="small text-danger">Campo
+            obligatorio</span>
+        </div>
+        <div class="form-outline my-2">
+          <label for="password">Contraseña</label>
+          <div class="input-group has-validation">
+            <span class="input-group-text form-row"><i class="fa fa-key"></i></span>
+            <input type="password" class="form-control" formControlName="password" id-test="password"
+              placeholder="Contraseña de usuario" />
+          </div>
+          <span *ngIf="!this.formulario.controls['password'].valid" class="small text-danger">Campo
+            obligatorio</span>
+        </div>
+        <div class="form-outline form-inline">
+          <input type="checkbox" class="form-check-input" formControlName="recordar" id-test="recordar">
+          <label class="form-check-label" for="recordar">Recuerdame</label>
+        </div>
+        <div class="form-outline form-inline justify-content-center">
+          <button type="submit" class="btn btn-primary w-100" id="btn-submit" id-test="btn-aceder">
+            <i *ngIf="cargando" class="fa fa-spinner fa-spin"></i>
+            Acceder
+          </button>
+        </div>
+        <div class="form-outline form-inline justify-content-center">
+          <a routerLink="/register">No tengo cuenta</a>
+        </div>
+        <div class="form-outline form-inline justify-content-center">
+          <a routerLink="/forget">He olvidado mi contraseña</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

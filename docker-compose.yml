@@ -10,6 +10,9 @@ services:
     # Puerto abierto para el acceso
     ports:
       - 1001:4200
+      - 9876:9876
+    environment:
+      - CHROME_BIN:chromium
     # Para la versión de desarrollo se mapea la carpeta con una local
     volumes:
       - .:/usr/src/app
