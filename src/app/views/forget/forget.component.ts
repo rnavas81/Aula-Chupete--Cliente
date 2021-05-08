@@ -17,7 +17,7 @@ export class ForgetComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
-    private userService: UserService,
+    public userService: UserService,
   ) {
     this.formulario = this.formBuilder.group({
       email: ['', [Validators.required]],

@@ -19,7 +19,7 @@ export class RegisterComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
-    private userService: UserService,
+    public userService: UserService,
   ) {
     this.formulario = this.formBuilder.group({
       name: ['', [Validators.maxLength(255)]],

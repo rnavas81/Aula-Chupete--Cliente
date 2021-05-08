@@ -18,7 +18,7 @@ export class UserService {
     private http: HttpClient,
     public router: Router,
   ) {
-
+    this.setUser(this.getUser());
   }
   initial() {
     this.name = "";
@@ -30,10 +30,7 @@ export class UserService {
   }
 
   set = (data: any) => {
-    if (data.hasOwnProperty("name")) this.name = data.name;
-    if (data.hasOwnProperty("lastname")) this.lastname = data.lastname;
-    if (data.hasOwnProperty("email")) this.email = data.email;
-    if (data.hasOwnProperty("id")) this.id = data.id;
+    this.setUser(data);
     const user = {
       id: this.id,
       name: this.name,
@@ -45,6 +42,17 @@ export class UserService {
       JSON.stringify(user)
     );
   };
+  setUser = (data: any) => {
+    if (data.hasOwnProperty("name")) this.name = data.name;
+    if (data.hasOwnProperty("lastname")) this.lastname = data.lastname;
+    if (data.hasOwnProperty("email")) this.email = data.email;
+    if (data.hasOwnProperty("id")) this.id = data.id;
+  }
+  getUser = () => {
+    return sessionStorage.getItem(environment.SESSIONSTORAGE_USER)
+            ? JSON.parse(sessionStorage.getItem(environment.SESSIONSTORAGE_USER))
+            : null;
+  }
   setToken = (token) => {
     sessionStorage.setItem(environment.SESSIONSTORAGE_TOKEN, token);
   };
@@ -93,7 +101,7 @@ export class UserService {
           this.initial();
           this.router.navigate(['/login']);
         })
-      );
+      ).subscribe();
   }
   register(data) {
     const url = `${environment.API_SERVER}/register`;
@@ -127,5 +135,17 @@ export class UserService {
       })
     }
     return this.http.get(url, extra);
+  }
+  getAulas() {
+    const url = `${environment.API_SERVER}/user/aulas/${this.id}`;
+    const extra = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'X-Requested-With': 'XMLHttpRequest',
+        'Authorization': 'Bearer ' + this.getToken(),
+      })
+    }
+    return this.http.get(url, extra);
+
   }
 }

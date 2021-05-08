@@ -15,6 +15,7 @@ import { ForgetComponent } from './views/forget/forget.component';
 import { MainComponent } from './views/main/main.component';
 import { MainTeacherComponent } from './views/main-teacher/main-teacher.component';
 import { MainParentComponent } from './views/main-parent/main-parent.component';
+import { HeaderComponent } from './components/header/header.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { MainParentComponent } from './views/main-parent/main-parent.component';
     ForgetComponent,
     MainComponent,
     MainTeacherComponent,
-    MainParentComponent
+    MainParentComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,

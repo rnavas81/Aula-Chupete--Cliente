@@ -18,7 +18,6 @@ export class TeacherGuard {
     return this.usuarioService.isLogged().pipe(map((response: {
       authenticated: boolean
     }) => {
-      console.log(response);
       if (response) {
         // this.router.navigate(['/main']);
         return false;

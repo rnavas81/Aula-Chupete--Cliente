@@ -1,1 +1,95 @@
+<!-- CABECERA -->
+<app-header></app-header>
+<!-- BARRA DE HERRAMIENTAS -->
+<nav id="toolbar" class="btn-toolbar justify-content-between p-2 d-flex sticky-top">
+  <div class="btn-group">
+    <!-- <button class="btn btn-sm btn-light" title="Retroceder una semana" (click)="anterior()"
+          [class.disabled]="isLoading">
+          <i class="fas fa-step-backward"></i>
+      </button>
+      <button class="btn btn-sm btn-light" title="Avanzar una semana" (click)="posterior()"
+          [class.disabled]="isLoading">
+          <i class="fas fa-step-forward"></i>
+      </button> -->
+  </div>
+  <div class="btn-group d-flex">
+    <p class="align-self-center m-0 font-weight-bold text-black-50 text-uppercase">{{aula.name}}</p>
+  </div>
+  <div class="btn-group">
+    <!-- <button class="btn btn-sm btn-light" title="Filtrar" (click)="buscar()">
+          <i class="fas fa-search"></i>
+      </button>
+      <a class="btn btn-sm btn-light" title="Agregar entrada" (click)="agregarEntrada()">
+          <i class="fas fa-plus"></i>
+      </a> -->
+    <button title="Agregar alumno" class="btn btn-sm btn-light" (click)="alumnoModal.show()" mdbWavesEffect
+      [class.disabled]="isLoading">
+      <i class="fas fa-plus"></i>
+    </button>
+  </div>
+</nav>
+<!-- CUERPO -->
+<main class="container-fluid">
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Apellidos</th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let alumno of this.alumnos" [attr.idRow]="alumno.id">
+        <td class="min">
+          <img *ngIf="alumno.id %2 == 1" class="avatar" [src]="'assets/avatar-boy.png'" alt="Imagen de alumno">
+          <img *ngIf="alumno.id%2 != 1" class="avatar" [src]="'assets/avatar-girl.png'" alt="Imagen de alumno">
+          <!-- <img *ngIf="alumno.gender != 1 && alumno.gender != 2" class="avatar" [src]="'assets/avatar-boy.png'" alt="Imagen de alumno"> -->
+        </td>
+        <td>{{alumno.name}}</td>
+        <td>{{alumno.lastname}}</td>
+        <td class="min">
+          <button type="button" class="btn btn-sm btn-warning mx-1 rounded-pill" (click)="falta(alumno.id)"
+            title="Asignar falta">
+            <i class="fas fa-calendar-times"></i>
+          </button>
+          <button type="button" class="btn btn-sm btn-success mx-1 rounded-pill" (click)="diario(alumno.id)"
+            title="Editar diario de hoy">
+            <i class="fas fa-book-open"></i>
+          </button>
+          <button type="button" class="btn btn-sm btn-primary mx-1 rounded-pill" (click)="editar(alumno.id)"
+            title="Editar datos del alumno">
+            <i class="fas fa-edit"></i>
+          </button>
+          <button type="button" class="btn btn-sm btn-danger mx-1 rounded-pill" (click)="eliminar(alumno.id)"
+            title="Eliminar alumno">
+            <i class="fas fa-trash-alt"></i>
+          </button>
 
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</main>
+<!-- MODAL NUEVO ALUMNO -->
+<div mdbModal #alumnoModal="mdbModal" class="modal fade" tabindex="-1" role="dialog"
+  aria-labelledby="myalumnoModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Selecciona una fecha</h5>
+        <button type="button" class="close" (click)="alumnoModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body text-center">
+        <input type="date" id="modal-calendario" title="Cerrar">
+      </div>
+      <div class="modal-footer">
+        <!-- <button type="button" class="btn btn-primary" (click)="onClickCalendario()">Buscar fecha</button> -->
+        <button id="calendar-modal-close" type="button" class="btn btn-secondary"
+          (click)="alumnoModal.hide()">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>

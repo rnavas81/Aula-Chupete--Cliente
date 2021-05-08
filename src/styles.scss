@@ -1,5 +1,61 @@
+// Fuentes
+@font-face {
+  font-family: 'IndieFlower';
+  src: url('./app/fonts/IndieFlower-Regular.ttf');
+}
+@font-face {
+  font-family: 'OriginalSurfer';
+  src: url('./app/fonts/OriginalSurfer-Regular.ttf');
+}
+// @import "app/style/colors.scss";
+// @import "../node_modules/ng-uikit-pro-standard/assets/scss/bootstrap/bootstrap.scss";
+* {
+  font-family: 'IndieFlower';
+  font-size: 1.1rem;
+}
 
 .fondo {
   background-image: url("assets/background.jpg");
   background-size: cover;
+}
+
+/*Small devices (landscape phones, 576px and up)*/
+@media (max-width: 576px) {
+  .d-hidden-sm {
+    display: none;
+  }
+}
+
+/*Medium devices (tablets, 768px and up)*/
+@media (max-width: 768px) {
+  .d-hidden-ml {
+    display: none;
+  }
+}
+
+/*Large devices (desktops, 992px and up)*/
+@media (max-width: 992px) {
+  .d-hidden-lg {
+    display: none;
+  }
+}
+
+/*Extra large devices (large desktops, 1200px and up)*/
+@media (max-width: 1200px) {
+  .d-hidden-xl {
+    display: none;
+  }
+}
+i.fas {
+  vertical-align: middle;
+}
+table {
+  img.avatar {
+    max-width: 36px;
+  }
+  .btn {
+    min-width: 42px;
+    min-height: 42px;
+    font-size: 1rem;
+  }
 }

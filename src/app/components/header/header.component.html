@@ -1,0 +1,21 @@
+<header class="container-fluid sticky-top">
+  <div class="row py-3 px-1">
+    <div class="col-4 col-sm-2 d-hidden-sm align-self-center">
+      <img class="logo btn m-0 p-0" [src]="'assets/logo.png'" alt="Aula Chupetes" srcset="" routerLink="/main">
+    </div>
+    <div class="align-items-center col-9 col-md col-sm-8 d-flex p-0">
+    </div>
+    <div class="align-items-center col-3 col-sm-2 d-flex justify-content-end p-0">
+      <div class="align-self-center d-hidden-ml">
+        <p class="m-0 mr-3 text-black-50 font-weight-bold text-uppercase cursor-default nombre">
+          {{userService.name+" "+userService.lastname}}</p>
+      </div>
+      <div class="btn btn-sm btn-dark ml-md-2" title="Editar perfil" routerLink="/profile">
+        <i class="fas fa-user"></i>
+      </div>
+      <div class="btn btn-sm btn-outline-dark ml-1 ml-md-2 mr-2" title="Salir" (click)="salir()">
+        <i class="fas fa-sign-out-alt"></i>
+      </div>
+    </div>
+  </div>
+</header>
