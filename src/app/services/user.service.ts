@@ -18,7 +18,7 @@ export class UserService {
     private http: HttpClient,
     public router: Router,
   ) {
-    this.setUser(this.getUser());
+    if (this.getUser()) this.setUser(this.getUser());
   }
   initial() {
     this.name = "";
@@ -50,8 +50,8 @@ export class UserService {
   }
   getUser = () => {
     return sessionStorage.getItem(environment.SESSIONSTORAGE_USER)
-            ? JSON.parse(sessionStorage.getItem(environment.SESSIONSTORAGE_USER))
-            : null;
+      ? JSON.parse(sessionStorage.getItem(environment.SESSIONSTORAGE_USER))
+      : null;
   }
   setToken = (token) => {
     sessionStorage.setItem(environment.SESSIONSTORAGE_TOKEN, token);
@@ -146,6 +146,38 @@ export class UserService {
       })
     }
     return this.http.get(url, extra);
-
+  }
+  getChilds() {
+    const url = `${environment.API_SERVER}/user/alumnos`;
+    const extra = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'X-Requested-With': 'XMLHttpRequest',
+        'Authorization': 'Bearer ' + this.getToken(),
+      })
+    }
+    return this.http.get(url, extra);
+  }
+  getParents(){
+    const url = `${environment.API_SERVER}/user/parents`;
+    const extra = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'X-Requested-With': 'XMLHttpRequest',
+        'Authorization': 'Bearer ' + this.getToken(),
+      })
+    }
+    return this.http.get(url, extra);
+  }
+  testEmail(email) {
+    const url = `${environment.API_SERVER}/user/email/${email}`;
+    const extra = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'X-Requested-With': 'XMLHttpRequest',
+        'Authorization': 'Bearer ' + this.getToken(),
+      })
+    }
+    return this.http.get(url, extra);
   }
 }

@@ -1,11 +1,19 @@
 header {
-  background-color: #94949430;
+  background-color: #949494b8;
+  & * {
+    font-family: "OriginalSurfer";
+  }
 
+  .fa,
+  .fas {
+    font-family: "Font Awesome 5 Free";
+  }
   img.logo {
     max-width: 40px;
   }
   p.nombre {
     cursor: default;
+    font-size: 0.8rem;
   }
   /*Small devices (landscape phones, 576px and up)*/
   @media (min-width: 576px) {
@@ -21,6 +29,14 @@ header {
   @media (min-width: 768px) {
     .logo {
       max-width: 40px;
+    }
+  }
+
+  @media (max-width: 450px) {
+    .opciones {
+      nav {
+        flex-wrap: wrap;
+      }
     }
   }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -7,12 +7,32 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
+  @Input() selected: string = "";
+  rol:string = undefined;
 
   constructor(
     public userService:UserService,
   ) { }
 
   ngOnInit(): void {
+    this.userService.getRol().subscribe(
+      (response: any) => {
+        switch (response.rol) {
+          case 'parent':
+            this.rol = 'parent';
+            break;
+          case 'teacher':
+          case 'admin':
+            this.rol = 'teacher';
+            break;
+          default:
+            this.userService.exit();
+            break;
+        }
+      }, error => {
+        this.userService.exit();
+      }
+    )
   }
 
   salir(){

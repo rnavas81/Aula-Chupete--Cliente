@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./main-parent.component.scss']
 })
 export class MainParentComponent implements OnInit {
-
+  toast: any;
   constructor() { }
 
   ngOnInit(): void {

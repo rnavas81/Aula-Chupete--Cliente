@@ -16,6 +16,11 @@ import { MainComponent } from './views/main/main.component';
 import { MainTeacherComponent } from './views/main-teacher/main-teacher.component';
 import { MainParentComponent } from './views/main-parent/main-parent.component';
 import { HeaderComponent } from './components/header/header.component';
+import { AulaFormComponent } from './views/aula-form/aula-form.component';
+import { AulasComponent } from './views/aulas/aulas.component';
+import { AlumnosComponent } from './views/alumnos/alumnos.component';
+import { AlumnoFormComponent } from './views/alumno-form/alumno-form.component';
+import { ToastComponent } from './components/toast/toast.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +31,12 @@ import { HeaderComponent } from './components/header/header.component';
     MainComponent,
     MainTeacherComponent,
     MainParentComponent,
-    HeaderComponent
+    HeaderComponent,
+    AulaFormComponent,
+    AulasComponent,
+    AlumnosComponent,
+    AlumnoFormComponent,
+    ToastComponent
   ],
   imports: [
     BrowserModule,

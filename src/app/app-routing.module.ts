@@ -13,6 +13,11 @@ import { MainParentComponent } from './views/main-parent/main-parent.component';
 import { MainTeacherComponent } from './views/main-teacher/main-teacher.component';
 import { MainComponent } from './views/main/main.component';
 import { RegisterComponent } from './views/register/register.component';
+import { AulaFormComponent } from './views/aula-form/aula-form.component';
+import { HasAulasGuard } from './security/has-aulas.service';
+import { AulasComponent } from './views/aulas/aulas.component';
+import { AlumnosComponent } from './views/alumnos/alumnos.component';
+import { AlumnoFormComponent } from './views/alumno-form/alumno-form.component';
 
 const routes: Routes = [
   { path: "", component: LoginComponent, canActivate: [TestLoginGuard] },
@@ -21,7 +26,11 @@ const routes: Routes = [
   { path: "forget", component: ForgetComponent },
   { path: "main", component: MainComponent, canActivate: [IsLoggedGuard] },
   { path: "main/parent", component: MainParentComponent, canActivate: [IsLoggedGuard] },
-  { path: "main/teacher", component: MainTeacherComponent, canActivate: [IsLoggedGuard, TeacherGuard] },
+  { path: "main/teacher", component: MainTeacherComponent, canActivate: [IsLoggedGuard, TeacherGuard, HasAulasGuard] },
+  { path: "aulas/formulario", component: AulaFormComponent, canActivate: [IsLoggedGuard, TeacherGuard ] },
+  { path: "aulas", component: AulasComponent, canActivate: [IsLoggedGuard, TeacherGuard ] },
+  { path: "alumnos", component: AlumnosComponent, canActivate: [IsLoggedGuard, TeacherGuard ] },
+  { path: "alumnos/formulario", component: AlumnoFormComponent, canActivate: [IsLoggedGuard, TeacherGuard ] },
   { path: '**', redirectTo: '' },
 ];
 
