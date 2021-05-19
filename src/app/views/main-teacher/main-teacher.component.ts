@@ -66,7 +66,7 @@ export class MainTeacherComponent implements OnInit {
         }
 
       }, error => {
-        console.log(error);
+        if (error.state == 403) this.userService.exit();
       }
     )
   }

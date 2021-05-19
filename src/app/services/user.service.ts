@@ -180,4 +180,16 @@ export class UserService {
     }
     return this.http.get(url, extra);
   }
+  getParentChilds(){
+    const url = `${environment.API_SERVER}/user/childs`;
+    const extra = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'X-Requested-With': 'XMLHttpRequest',
+        'Authorization': 'Bearer ' + this.getToken(),
+      })
+    }
+    return this.http.get(url, extra);
+
+  }
 }

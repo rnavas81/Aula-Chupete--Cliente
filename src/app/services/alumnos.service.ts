@@ -63,4 +63,26 @@ export class AlumnosService {
     }
     return this.http.delete(url, extra);
   }
+  getAulas(idAlumno){
+    const url = `${environment.API_SERVER}/alumno/${idAlumno}/aulas`;
+    const extra = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'X-Requested-With': 'XMLHttpRequest',
+        'Authorization': 'Bearer ' + this.userService.getToken()
+      })
+    }
+    return this.http.get(url, extra);
+  }
+  getDiario(idAlumno,idAula, fecha) {
+    const url = `${environment.API_SERVER}/alumno/${idAlumno}/aula/${idAula}/diario/${fecha}`;
+    const extra = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'X-Requested-With': 'XMLHttpRequest',
+        'Authorization': 'Bearer ' + this.userService.getToken()
+      })
+    }
+    return this.http.get(url, extra);
+  }
 }

@@ -64,13 +64,13 @@ i.fas {
   vertical-align: middle;
 }
 .modal-header * {
-  font-family: 'OriginalSurfer';
+  font-family: "OriginalSurfer";
 }
 .small {
   font-size: 0.7rem;
 }
-.required::before{
-  content: '*';
+.required::before {
+  content: "*";
   color: rgb(167, 0, 0);
 }
 .no-resize {
@@ -79,10 +79,11 @@ i.fas {
 .modal-open .modal {
   overflow-y: auto !important;
 }
-form {
-  &.bg-form{
-    background-color: #94949454;
-  }
+.cursor-default {
+  cursor: default;
+}
+.bg-form {
+  background-color: #94949454;
 }
 table {
   background-color: #d3d3d36b;

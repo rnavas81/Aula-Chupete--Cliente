@@ -9,16 +9,14 @@
           <a class="navbar-brand" routerLink="/main/teacher" [class.text-black-50]="selected != 'miaula'">Mi aula</a>
           <a class="navbar-brand" routerLink="/aulas" [class.text-black-50]="selected != 'aulas'">Aulas</a>
           <a class="navbar-brand" routerLink="/alumnos" [class.text-black-50]="selected != 'alumnos'">Alumnos</a>
-          <a class="navbar-brand" routerLink="/dietario" [class.text-black-50]="selected != 'dietario'">Dietario</a>
+          <a class="navbar-brand" routerLink="/dietarios" [class.text-black-50]="selected != 'dietario'">Dietario</a>
       </nav>
       <!-- OPCIONES PARA PADRE -->
       <nav *ngIf='rol == "parent"' class="navbar navbar-expand navbar-light ">
-          <a class="navbar-brand" routerLink="/avisos" [class.text-black-50]="selected != 'avisos'">Avisos</a>
-          <a class="navbar-brand" routerLink="/libro" [class.text-black-50]="selected != 'libro'">Libro</a>
-          <a class="navbar-brand" routerLink="#usuarios"
-              [class.text-black-50]="selected != 'usuarios'">Usuarios</a>
-          <a class="navbar-brand" routerLink="#configuracion"
-              [class.text-black-50]="selected != 'configuracion'">Configuración</a>
+        <a class="navbar-brand" routerLink="/main/parent" [class.text-black-50]="selected != 'miaula'">El aula</a>
+        <a class="navbar-brand" routerLink="/mishijos" [class.text-black-50]="selected != 'alumnos'">Mis hijos</a>
+        <a class="navbar-brand" routerLink="/dietario" [class.text-black-50]="selected != 'dietario'">Dietario</a>
+
       </nav>
     </div>
     <div class="align-items-center col-3 d-flex justify-content-end p-0">

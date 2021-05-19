@@ -218,4 +218,17 @@ export class AulaService {
 
   }
 
+  getDietario(idAula,fecha){
+    const url = `${environment.API_SERVER}/aula/${idAula}/dietario/${fecha}`;
+    const extra = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'X-Requested-With': 'XMLHttpRequest',
+        'Authorization': 'Bearer ' + this.userService.getToken()
+      })
+    }
+    return this.http.get(url, extra);
+
+  }
+
 }
