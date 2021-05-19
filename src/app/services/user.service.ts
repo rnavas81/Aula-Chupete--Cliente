@@ -11,6 +11,7 @@ export class UserService {
   lastname: string;
   name: string;
   email: string;
+  contact: string;
   id: number;
 
 
@@ -21,9 +22,10 @@ export class UserService {
     if (this.getUser()) this.setUser(this.getUser());
   }
   initial() {
-    this.name = "";
-    this.lastname = "";
-    this.email = "";
+    this.name = '';
+    this.lastname = '';
+    this.email = '';
+    this.contact = '';
     this.id = 0;
     sessionStorage.removeItem(environment.SESSIONSTORAGE_USER);
     sessionStorage.removeItem(environment.SESSIONSTORAGE_TOKEN);
@@ -36,6 +38,7 @@ export class UserService {
       name: this.name,
       lastname: this.lastname,
       email: this.email,
+      contact: this.contact,
     };
     sessionStorage.setItem(
       environment.SESSIONSTORAGE_USER,
@@ -43,10 +46,11 @@ export class UserService {
     );
   };
   setUser = (data: any) => {
-    if (data.hasOwnProperty("name")) this.name = data.name;
-    if (data.hasOwnProperty("lastname")) this.lastname = data.lastname;
-    if (data.hasOwnProperty("email")) this.email = data.email;
-    if (data.hasOwnProperty("id")) this.id = data.id;
+    if (data.hasOwnProperty('name')) this.name = data.name;
+    if (data.hasOwnProperty('lastname')) this.lastname = data.lastname;
+    if (data.hasOwnProperty('email')) this.email = data.email;
+    if (data.hasOwnProperty('contact')) this.contact = data.contact;
+    if (data.hasOwnProperty('id')) this.id = data.id;
   }
   getUser = () => {
     return sessionStorage.getItem(environment.SESSIONSTORAGE_USER)
@@ -191,5 +195,16 @@ export class UserService {
     }
     return this.http.get(url, extra);
 
+  }
+  save(data){
+    const url = `${environment.API_SERVER}/user`;
+    const extra = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'X-Requested-With': 'XMLHttpRequest',
+        'Authorization': 'Bearer ' + this.getToken(),
+      })
+    }
+    return this.http.put(url, data, extra);
   }
 }

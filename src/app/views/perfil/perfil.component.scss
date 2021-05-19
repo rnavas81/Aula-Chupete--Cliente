@@ -1,0 +1,14 @@
+form {
+  label {
+    min-width: 200px;
+  }
+  input {
+    &#contact{
+      width: 375px;
+    }
+    &#password, &#password2 {
+      width: 225px;
+    }
+
+  }
+}

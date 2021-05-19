@@ -21,6 +21,7 @@ import { AulasComponent } from './views/aulas/aulas.component';
 import { AlumnosComponent } from './views/alumnos/alumnos.component';
 import { AlumnoFormComponent } from './views/alumno-form/alumno-form.component';
 import { ToastComponent } from './components/toast/toast.component';
+import { PerfilComponent } from './views/perfil/perfil.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { ToastComponent } from './components/toast/toast.component';
     AulasComponent,
     AlumnosComponent,
     AlumnoFormComponent,
-    ToastComponent
+    ToastComponent,
+    PerfilComponent
   ],
   imports: [
     BrowserModule,

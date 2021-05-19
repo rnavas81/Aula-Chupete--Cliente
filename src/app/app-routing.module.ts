@@ -18,12 +18,14 @@ import { HasAulasGuard } from './security/has-aulas.service';
 import { AulasComponent } from './views/aulas/aulas.component';
 import { AlumnosComponent } from './views/alumnos/alumnos.component';
 import { AlumnoFormComponent } from './views/alumno-form/alumno-form.component';
+import { PerfilComponent } from './views/perfil/perfil.component';
 
 const routes: Routes = [
   { path: "", component: LoginComponent, canActivate: [TestLoginGuard] },
   { path: "login", component: LoginComponent, canActivate: [TestLoginGuard] },
   { path: "register", component: RegisterComponent },
   { path: "forget", component: ForgetComponent },
+  { path: "profile", component: PerfilComponent, canActivate: [IsLoggedGuard] },
   { path: "main", component: MainComponent, canActivate: [IsLoggedGuard] },
   { path: "main/parent", component: MainParentComponent, canActivate: [IsLoggedGuard] },
   { path: "main/teacher", component: MainTeacherComponent, canActivate: [IsLoggedGuard, TeacherGuard, HasAulasGuard] },
