@@ -36,7 +36,6 @@ export class HeaderComponent implements OnInit {
   }
 
   salir(){
-    console.log('salir');
     this.userService.exit();
   }
 }

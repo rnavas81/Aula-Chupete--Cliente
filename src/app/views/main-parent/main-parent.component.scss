@@ -7,9 +7,16 @@ img.avatar {
 }
 nav {
   div {
-    p,select {
+    p,
+    select {
       min-width: 200px;
       margin: 0 10px 0 0;
     }
   }
+}
+div.caja-2 {
+  min-height: 120px;
+}
+div.caja-3 {
+  min-height: 90px;
 }

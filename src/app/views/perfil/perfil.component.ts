@@ -50,8 +50,6 @@ export class PerfilComponent implements OnInit {
         }, (error: any) => {
           if (error.status == 403) this.userService.exit();
           else if (error.status == 422) {
-            console.log(error);
-
             if (error.error.errors.hasOwnProperty('email')) {
               console.error('email en uso');
               this.validEmail=false;

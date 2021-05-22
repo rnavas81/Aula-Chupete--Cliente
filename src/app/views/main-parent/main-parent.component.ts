@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import * as moment from 'moment';
 import { AlumnosService } from 'src/app/services/alumnos.service';
 import { AulaService } from 'src/app/services/aula.service';
+import { DietarioService } from 'src/app/services/dietario.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -13,18 +14,20 @@ export class MainParentComponent implements OnInit {
   toast: any;
   alumnos:any=[];
   aulas:any=[];
+  alergenos:any=[];
   aulaSelected:number=0;
 
   alumno:any;
   fecha:any;
   diario:any;
-  dietary:string="";
+  dietary:any={};
   isLoading:boolean=false;
 
   constructor(
     private userService: UserService,
     private alumnoService: AlumnosService,
     private aulaService: AulaService,
+    private dietarioService: DietarioService,
   ) {
 
    }
@@ -44,6 +47,23 @@ export class MainParentComponent implements OnInit {
         else this.toast={text:'Error al recuperar los alumnos',type:'error'}
       }
     )
+    this.getAlergenos();
+  }
+  getAlergenos() {
+    if (!this.alergenos) {
+      this.dietarioService.getAlergenos().subscribe(
+        (response: any) => this.alergenos = response,
+        (error: any) => {
+          if (error.status == 403) this.userService.exit();
+          else this.toast = { text: 'Error al recuperar los alergenos', type: 'error' }
+        }
+      )
+    }
+  }
+  nombreAlergeno(id) {
+    const item = this.alergenos.find(x => x.id == id);
+    if(item)return item.value
+    else return ''
   }
   cargarAlumno(nuevoId=0){
     this.alumno = this.alumnos.find(x=>x.id==nuevoId);
@@ -93,11 +113,18 @@ export class MainParentComponent implements OnInit {
     )
   }
   cargarDietario(){
-    this.aulaService.getDietario(this.aulaSelected,this.fecha).subscribe(
+    this.aulaService.getDietarioDia(this.aulaSelected,this.fecha).subscribe(
       (response:any)=>{
-        // TODO:IMPOLEMENTAR MOSTRAR EL DIETARIO
-        // this.diario = response;
-        console.log(response);
+        this.dietary = response;
+        if(this.dietary.breakfast.length>0){
+          this.dietary.breakfast=`Hoy desayunamos ${this.dietary.breakfast}`;
+        }
+        if(this.dietary.lunch.length>0){
+          this.dietary.lunch=`Hoy comemos ${this.dietary.lunch}`
+        }
+        if(this.dietary.desert.length>0){
+          this.dietary.desert=`y de postre ${this.dietary.desert}`
+        }
       }, (error:any)=>{
         if(error.status==403)this.userService.exit();
         else this.toast={text:'Error al recuperar el dietario',type:'error'}

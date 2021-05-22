@@ -97,7 +97,6 @@ export class AlumnoFormComponent implements OnInit {
 
     if (this.form.valid) {
       data.padres = this.data.padres;
-      console.log(data,this.data.padres);
 
       if (this.data.id == 0) {
         this.alumnoService.add(data).subscribe(

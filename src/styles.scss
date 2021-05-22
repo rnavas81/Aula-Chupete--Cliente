@@ -106,3 +106,65 @@ table {
     }
   }
 }
+$assetPath: "~src/assets/";
+$alergenos: "#{$assetPath}alergenos.png";
+@mixin calcularImagenAlergenoX($x) {
+  background-position-x: $x * -32px;
+}
+@mixin calcularImagenAlergenoY($y) {
+  background-position-y: $y * -32px;
+}
+div[class*="alergeno-"] {
+  @include calcularImagenAlergenoY(1);
+  @include calcularImagenAlergenoX(2);
+  background-image: url(#{$alergenos});
+  width: 32px;
+  height: 32px;
+  background-color: #e0e0e0a8;
+  border-radius: 50%;
+}
+div.alergeno-1,
+div.alergeno-2,
+div.alergeno-3,
+div.alergeno-4,
+div.alergeno-5 {
+  @include calcularImagenAlergenoY(0);
+}
+div.alergeno-6,
+div.alergeno-7,
+div.alergeno-8,
+div.alergeno-9 {
+  @include calcularImagenAlergenoY(1);
+}
+div.alergeno-10,
+div.alergeno-11,
+div.alergeno-12,
+div.alergeno-13,
+div.alergeno-14 {
+  @include calcularImagenAlergenoY(2);
+}
+
+div.alergeno-1,
+div.alergeno-6,
+div.alergeno-10 {
+  @include calcularImagenAlergenoX(0);
+}
+div.alergeno-2,
+div.alergeno-7,
+div.alergeno-11 {
+  @include calcularImagenAlergenoX(1);
+}
+div.alergeno-3,
+div.alergeno-12 {
+  @include calcularImagenAlergenoX(2);
+}
+div.alergeno-4,
+div.alergeno-8,
+div.alergeno-13 {
+  @include calcularImagenAlergenoX(3);
+}
+div.alergeno-5,
+div.alergeno-9,
+div.alergeno-14 {
+  @include calcularImagenAlergenoX(4);
+}

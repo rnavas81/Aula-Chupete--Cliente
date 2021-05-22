@@ -12,7 +12,7 @@ export class AulasComponent implements OnInit {
   aulas: any = [];
   isLoading: boolean = false;
   selected: number = 0;
-  toast: any={};
+  toast: any;
 
   constructor(
     private route: Router,

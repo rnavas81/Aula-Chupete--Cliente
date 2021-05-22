@@ -1,0 +1,242 @@
+<!-- CABECERA -->
+<app-header></app-header>
+<!-- TOAST -->
+<app-toast [toast]="this.toast"></app-toast>
+
+<!-- BARRA DE HERRAMIENTAS -->
+<nav id="toolbar" class="btn-toolbar justify-content-between p-2 d-flex ">
+  <div class="btn-group flex-1">
+    <p class="align-self-center m-0 font-weight-bold text-black-50 text-uppercase">
+      Dietario
+    </p>
+    <p *ngIf="aulas.length==1"
+      class=" align-self-center my-0 ml-3 font-weight-bold text-black-50 text-uppercase cursor-default">
+      {{aulas[0].name}}
+      ({{aulas[0].year}}/{{aulas[0].year+1}})
+    </p>
+    <select *ngIf="aulas.length>1" class="ml-3 form-control w-auto" (change)="cambiarAula($event.target.value)"
+      placeholder='Aulas'>
+      <option *ngFor="let item of aulas;index as i" [value]="item.id">{{item.name}} ({{item.year}}/{{item.year+1}})
+      </option>
+    </select>
+  </div>
+  <div>
+    <div class="btn-group mr-3 align-self-center">
+      <button title="Semana anterior" class="btn btn-sm shadow-none" (click)="cambiarSemana(-1)" [class.disabled]="isLoading">
+        <i class="fas fa-angle-left"></i>
+      </button>
+      <input class="form-control w-auto" type="date" name="fecha" id="fecha"
+        (change)="cambiarDia($event.target.value);this.cargarDietario();">
+      <button title="Semana siguiente" class="btn btn-sm shadow-none" (click)="cambiarSemana(1)" [class.disabled]="isLoading">
+        <i class="fas fa-angle-right"></i>
+      </button>
+    </div>
+    <div class="btn-group">
+      <button title="Buscar menú" class="btn btn-sm btn-light" (click)="cargarMenu.show()" [class.disabled]="isLoading">
+        <i class="fas fa-search"></i>
+      </button>
+      <button title="Guardar como menú" class="btn btn-sm btn-light" (click)="guardarMenu.show()"
+        [class.disabled]="isLoading">
+        <i class="fas fa-save"></i>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- CUERPO -->
+<main class="container-fluid ">
+  <div class="row bg-form mx-2">
+    <div *ngFor="let item of dietarioView;" class="col-6 col-md dia px-0">
+      <div class="border-bottom border-dark d-flex flex-wrap text-uppercase titulo px-1 pt-2">
+        <div class="h5 text-left font-weight-bold">
+          {{item.dia}}
+        </div>
+        <div class="h5 text-center font-weight-bold">
+          {{fechaLocal(item.fecha)}}
+        </div>
+      </div>
+      <div *ngIf="!!item.menu">
+        <div class="comida p-2 border-bottom">
+          <div class="font-weight-bold">
+            <button class="btn btn-light btn-sm rounded-circle"
+              (click)="editarComida(item.menu.id,item.fecha,'breakfast');editarComidaModal.show();">
+              <i class="fas fa-edit small"></i>
+            </button>
+            Desayuno
+          </div>
+          <p>
+            {{item.menu.breakfast}}
+          </p>
+          <div *ngIf="item.menu.breakfast" class="d-flex">
+            <div *ngFor="let alergeno of item.menu.breakfast_allergens" class="mx-1" [class]="'alergeno-'+alergeno"
+              [title]="nombreAlergeno(alergeno)">
+            </div>
+          </div>
+        </div>
+        <div class="comida p-2 border-bottom">
+          <div class="font-weight-bold">
+            <button class="btn btn-light btn-sm rounded-circle"
+              (click)="editarComida(item.menu.id,item.fecha,'lunch');editarComidaModal.show();">
+              <i class="fas fa-edit small"></i>
+            </button>
+            Comida
+          </div>
+          {{item.menu.lunch}}
+          <div *ngIf="item.menu.lunch_allergens" class="d-flex">
+            <div *ngFor="let alergeno of item.menu.lunch_allergens" class="mx-1" [class]="'alergeno-'+alergeno"
+              [title]="nombreAlergeno(alergeno)"></div>
+          </div>
+        </div>
+        <div class="comida p-2 border-bottom">
+          <div class="font-weight-bold">
+            <button class="btn btn-light btn-sm rounded-circle"
+              (click)="editarComida(item.menu.id,item.fecha,'desert');editarComidaModal.show();">
+              <i class="fas fa-edit small"></i>
+            </button>
+            Postre
+          </div>
+          {{item.menu.desert}}
+          <div *ngIf="item.menu.desert_allergens" class="d-flex flex-wrap">
+            <div *ngFor="let alergeno of item.menu.desert_allergens" class="mx-1" [class]="'alergeno-'+alergeno"
+              [title]="nombreAlergeno(alergeno)"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- MODAL GUARDAR COMO MENU-->
+<div mdbModal #guardarMenu="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="guardarMenuLabel"
+  aria-hidden="true" (onShow)="onguardarMenuShow()" (onHide)="onguardarMenuHide()">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Guardar como menú</h5>
+      </div>
+      <div class="modal-body">
+        <form class="" [formGroup]="formGuardarMenu">
+          <div class="">
+            <input type="text" formControlName="name" class="form-control" />
+            <div
+              *ngIf="(this.formGuardarMenu.get('name').dirty || this.formGuardarMenu.get('name').touched) && this.formGuardarMenu.get('name').invalid"
+              class="alert alert-danger">
+              <div *ngIf="formGuardarMenu.get('name').errors.required" class="small">
+                Este campo es necesario
+              </div>
+              <div *ngIf="formGuardarMenu.get('name').errors.maxlength" class="small">
+                Maximo de 255 caracteres
+              </div>
+            </div>
+          </div>
+        </form>
+        <p>Va a guardar esta semana como un menú<br>¿desea continuar?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" (click)="this.onguardarMenuAcept()" data-dismiss="modal">
+          Guardar
+        </button>
+        <button id="guardar-menu-close" type="button" class="btn btn-secondary" (click)="guardarMenu.hide()">
+          Cancelar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL CARGAR MENU -->
+<div mdbModal #cargarMenu="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="cargarMenuLabel"
+  aria-hidden="true" (onShow)="oncargarMenuShow()" (onHide)="oncargarMenuHide()">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cargar menú</h5>
+      </div>
+      <div class="modal-body max-vh-50 overflow-auto">
+        <form class="" [formGroup]="formcargarMenu">
+          <div *ngFor="let item of menus" class="form-check-inline w-100">
+            <input type="radio" formControlName="menus" [id]="'menu-'+item.id" class="form-check-input" [value]="item.id"/>
+            <label class="form-check-label" [for]="'menu-'+item.id">{{item.name}}</label>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <p class="alert-danger border border-danger mb-0 p-1">
+          Si acepta perderá los platos que tuviera en el dietario
+        </p>
+        <button type="button" class="btn btn-danger" (click)="this.oncargarMenuAcept()" data-dismiss="modal">
+          Aceptar
+        </button>
+        <button id="cargar-menu-close" type="button" class="btn btn-secondary" (click)="cargarMenu.hide()">
+          Cancelar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL FORMULARIO MENÚ -->
+<div mdbModal #editarComidaModal="mdbModal" class="modal fade" tabindex="-1" role="dialog"
+  aria-labelledby="editarComidaModalLabel" aria-hidden="true" (onShow)="oneditarComidaModalShow()"
+  (onHide)="oneditarComidaModalHide()">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" *ngIf="this.modalData.comida =='breakfast'">
+          Desayuno
+        </h5>
+        <h5 class="modal-title" *ngIf="this.modalData.comida =='lunch'">
+          Comida
+        </h5>
+        <h5 class="modal-title" *ngIf="this.modalData.comida =='desert'">
+          Postre
+        </h5>
+      </div>
+      <div class="modal-body">
+        <form class="container-fluid" [formGroup]="formPlato">
+          <div class="row">
+            <div class="col-12">
+              <textarea formControlName="plato" class="form-control text-left no-resize"
+                rows="4">{{this.modalData.plato}}</textarea>
+              <div
+                *ngIf="(this.formPlato.get('plato').dirty || this.formPlato.get('plato').touched) && this.formPlato.get('plato').invalid"
+                class="alert alert-danger">
+                <div *ngIf="formPlato.get('plato').errors.required" class="small">
+                  Este campo es necesario
+                </div>
+                <div *ngIf="formPlato.get('plato').errors.maxlength" class="small">
+                  Maximo de 255 caracteres
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <p class="h4">Alergenos</p>
+            </div>
+          </div>
+          <div class="row">
+            <div *ngFor="let item of alergenos" class="col-4">
+              <div class=" form-check-inline">
+                <input type="checkbox" class="form-check" name="alergenos-modal" [id]="'alergenos-modal-'+item.id"
+                  [value]="item.id">
+                <label [for]="'alergenos-modal-'+item.id" class="p-0">
+                  {{item.value}}
+                  <div class="float-right" [class]="'alergeno-'+item.id"></div>
+                </label>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="this.oneditarComidaModalAccept()" data-dismiss="modal">
+          Guardar
+        </button>
+        <button id="editarComidaModal-close" type="button" class="btn btn-secondary" (click)="editarComidaModal.hide()">
+          Cancelar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

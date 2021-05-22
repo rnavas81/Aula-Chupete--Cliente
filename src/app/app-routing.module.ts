@@ -19,6 +19,9 @@ import { AulasComponent } from './views/aulas/aulas.component';
 import { AlumnosComponent } from './views/alumnos/alumnos.component';
 import { AlumnoFormComponent } from './views/alumno-form/alumno-form.component';
 import { PerfilComponent } from './views/perfil/perfil.component';
+import { MenusComponent } from './views/menus/menus.component';
+import { DietariosComponent } from './views/dietarios/dietarios.component';
+import { DietariosPadresComponent } from './views/dietarios-padres/dietarios-padres.component';
 
 const routes: Routes = [
   { path: "", component: LoginComponent, canActivate: [TestLoginGuard] },
@@ -29,10 +32,13 @@ const routes: Routes = [
   { path: "main", component: MainComponent, canActivate: [IsLoggedGuard] },
   { path: "main/parent", component: MainParentComponent, canActivate: [IsLoggedGuard] },
   { path: "main/teacher", component: MainTeacherComponent, canActivate: [IsLoggedGuard, TeacherGuard, HasAulasGuard] },
-  { path: "aulas/formulario", component: AulaFormComponent, canActivate: [IsLoggedGuard, TeacherGuard ] },
   { path: "aulas", component: AulasComponent, canActivate: [IsLoggedGuard, TeacherGuard ] },
+  { path: "aulas/formulario", component: AulaFormComponent, canActivate: [IsLoggedGuard, TeacherGuard ] },
   { path: "alumnos", component: AlumnosComponent, canActivate: [IsLoggedGuard, TeacherGuard ] },
   { path: "alumnos/formulario", component: AlumnoFormComponent, canActivate: [IsLoggedGuard, TeacherGuard ] },
+  { path: "menus", component: MenusComponent, canActivate: [IsLoggedGuard, TeacherGuard ] },
+  { path: "dietarios/teacher", component: DietariosComponent, canActivate: [IsLoggedGuard, TeacherGuard ] },
+  { path: "dietarios/parent", component: DietariosPadresComponent, canActivate: [IsLoggedGuard] },
   { path: '**', redirectTo: '' },
 ];
 

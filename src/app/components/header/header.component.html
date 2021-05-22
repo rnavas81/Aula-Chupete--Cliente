@@ -9,17 +9,18 @@
           <a class="navbar-brand" routerLink="/main/teacher" [class.text-black-50]="selected != 'miaula'">Mi aula</a>
           <a class="navbar-brand" routerLink="/aulas" [class.text-black-50]="selected != 'aulas'">Aulas</a>
           <a class="navbar-brand" routerLink="/alumnos" [class.text-black-50]="selected != 'alumnos'">Alumnos</a>
-          <a class="navbar-brand" routerLink="/dietarios" [class.text-black-50]="selected != 'dietario'">Dietario</a>
+          <a class="navbar-brand" routerLink="/menus" [class.text-black-50]="selected != 'dietario'">Menus</a>
+          <a class="navbar-brand" routerLink="/dietarios/teacher" [class.text-black-50]="selected != 'dietario'">Dietario</a>
       </nav>
       <!-- OPCIONES PARA PADRE -->
       <nav *ngIf='rol == "parent"' class="navbar navbar-expand navbar-light ">
         <a class="navbar-brand" routerLink="/main/parent" [class.text-black-50]="selected != 'miaula'">El aula</a>
         <a class="navbar-brand" routerLink="/mishijos" [class.text-black-50]="selected != 'alumnos'">Mis hijos</a>
-        <a class="navbar-brand" routerLink="/dietario" [class.text-black-50]="selected != 'dietario'">Dietario</a>
+        <a class="navbar-brand" routerLink="/dietarios/parent" [class.text-black-50]="selected != 'dietario'">Dietario</a>
 
       </nav>
     </div>
-    <div class="align-items-center col-3 d-flex justify-content-end p-0">
+    <div class="align-items-center col-3 d-flex justify-content-end p-0 pr-3">
       <div class="align-self-center d-hidden-ml">
         <p class="m-0 mr-3 text-black-50 font-weight-bold text-uppercase cursor-default nombre">
           {{userService.name+" "+userService.lastname}}</p>

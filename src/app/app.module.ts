@@ -22,6 +22,9 @@ import { AlumnosComponent } from './views/alumnos/alumnos.component';
 import { AlumnoFormComponent } from './views/alumno-form/alumno-form.component';
 import { ToastComponent } from './components/toast/toast.component';
 import { PerfilComponent } from './views/perfil/perfil.component';
+import { MenusComponent } from './views/menus/menus.component';
+import { DietariosComponent } from './views/dietarios/dietarios.component';
+import { DietariosPadresComponent } from './views/dietarios-padres/dietarios-padres.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +41,10 @@ import { PerfilComponent } from './views/perfil/perfil.component';
     AlumnosComponent,
     AlumnoFormComponent,
     ToastComponent,
-    PerfilComponent
+    PerfilComponent,
+    MenusComponent,
+    DietariosComponent,
+    DietariosPadresComponent
   ],
   imports: [
     BrowserModule,

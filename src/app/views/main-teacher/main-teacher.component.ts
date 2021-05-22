@@ -98,8 +98,8 @@ export class MainTeacherComponent implements OnInit {
       (response: any) => {
         this.alumnos = response;
       }, (error: any) => {
-        console.log(error);
-
+        if(error.status==403)this.userService.exit();
+        else this.toast={text:'Error al recuperar los alumnos',type:'error'}
       }
     );
   }
@@ -257,7 +257,6 @@ export class MainTeacherComponent implements OnInit {
             document.getElementById('nuevo-alumno-modal-close').click();
             this.ordernarAlumnos();
           }, error => {
-            console.log(error.status);
             if (error.status == 403) this.userService.exit();
           }
         )
@@ -269,8 +268,7 @@ export class MainTeacherComponent implements OnInit {
             this.alumnos.push(response);
             this.ordernarAlumnos();
           }, error => {
-            console.log(error);
-
+            if (error.status == 403) this.userService.exit();
           }
         )
       }
@@ -312,7 +310,6 @@ export class MainTeacherComponent implements OnInit {
     if (this.formDiarioAlumno.valid) {
       this.aulaService.setDiarioAlumno(this.idDiario, this.selected, data).subscribe(
         (response: any) => {
-          console.log(response);
           const index = this.diarios.findIndex(x => x.idAlumno == response.idAlumno);
           this.diarios[index] = response;
         }, error => {

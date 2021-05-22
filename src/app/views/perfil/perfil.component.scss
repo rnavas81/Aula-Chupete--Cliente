@@ -3,11 +3,13 @@ form {
     min-width: 200px;
   }
   input {
-    &#contact{
-      width: 375px;
-    }
-    &#password, &#password2 {
-      width: 225px;
+    @media (min-width:770px) {
+      &#contact{
+        width: 375px;
+      }
+      &#password, &#password2 {
+        width: 225px;
+      }
     }
 
   }
