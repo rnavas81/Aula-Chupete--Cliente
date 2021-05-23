@@ -120,10 +120,12 @@ export class MainTeacherComponent implements OnInit {
         this.content = response.content;
         this.faltas = [];
         this.idDiario = response.id;
-        response.entradas.forEach(entrada => {
-          if (entrada.absence == 1) this.faltas.push(entrada.idAlumno);
-        });
-        this.diarios = response.entradas;
+        if(response.entradas){
+          response.entradas.forEach(entrada => {
+            if (entrada.absence == 1) this.faltas.push(entrada.idAlumno);
+          });
+          this.diarios = response.entradas;
+        } else this.diarios = [];
 
       }, error => {
         if (error.status == 403) this.userService.exit();

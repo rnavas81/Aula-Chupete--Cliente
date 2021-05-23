@@ -13,8 +13,8 @@ export class MenusService {
     private userService: UserService,
   ) { }
 
-  get() {
-    const url = `${environment.API_SERVER}/menu`;
+  get(id=null) {
+    const url = `${environment.API_SERVER}/menu${id!==null?'/'+id:''}`;
     const extra = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -25,7 +25,7 @@ export class MenusService {
     return this.http.get(url, extra);
   }
   getDias(idMenu) {
-    const url = `${environment.API_SERVER}/menu${idMenu}/dias`;
+    const url = `${environment.API_SERVER}/menu/${idMenu}/dias`;
     const extra = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -46,6 +46,17 @@ export class MenusService {
       })
     }
     return this.http.post(url, data, extra);
+  }
 
+  set(data) {
+    const url = `${environment.API_SERVER}/menu/${data.id}`;
+    const extra = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'X-Requested-With': 'XMLHttpRequest',
+        'Authorization': 'Bearer ' + this.userService.getToken()
+      })
+    }
+    return this.http.put(url, data, extra);
   }
 }

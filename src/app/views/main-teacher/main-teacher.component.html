@@ -42,54 +42,56 @@
         </div>
       </form>
     </div>
-    <table class="table col-md-8">
-      <thead>
-        <tr>
-          <th scope="col">#</th>
-          <th scope="col">Nombre</th>
-          <th scope="col">Apellidos</th>
-          <th scope="col"></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngIf="this.alumnos.length == 0">
-          <td colspan="4" class="text-info">
-            <div class="d-flex justify-content-center mt-5">
-              <i class="fa fa-spinner fa-spin fa-10x"></i>
-            </div>
-          </td>
-        </tr>
-        <tr *ngFor="let alumno of this.alumnosOrdenados()" [attr.idRow]="alumno.id">
-          <td class="min">
-            <img *ngIf="alumno.gender == 1" class="avatar" [src]="'assets/avatar-boy.png'" alt="Imagen de alumno">
-            <img *ngIf="alumno.gender == 2" class="avatar" [src]="'assets/avatar-girl.png'" alt="Imagen de alumno">
-            <!-- <img *ngIf="alumno.gender != 1 && alumno.gender != 2" class="avatar" [src]="'assets/avatar-boy.png'" alt="Imagen de alumno"> -->
-          </td>
-          <td>{{alumno.name}}</td>
-          <td>{{alumno.lastname}}</td>
-          <td class="min">
-            <button type="button" class="btn btn-sm mx-1 rounded-pill" (click)="falta(alumno.id)" title="Asignar falta"
-              [class.btn-info]="!faltas.includes(alumno.id)" [class.btn-warning]="faltas.includes(alumno.id)">
-              <i class="fas fa-calendar-times"></i>
-            </button>
-            <button type="button" class="btn btn-sm btn-success mx-1 rounded-pill"
-              [class.disabled]="faltas.includes(alumno.id)" (click)="seleccionar(alumno.id);diarioModal.show()"
-              title="Editar diario">
-              <i class="fas fa-book-open"></i>
-            </button>
-            <button type="button" class="btn btn-sm btn-primary mx-1 rounded-pill"
-              (click)="seleccionar(alumno.id);datosAlumnoModal.show()" title="Editar datos del alumno">
-              <i class="fas fa-edit"></i>
-            </button>
-            <button type="button" class="btn btn-sm btn-danger mx-1 rounded-pill"
-              (click)="seleccionar(alumno.id);confirmarEliminarModal.show()" title="Eliminar alumno">
-              <i class="fas fa-trash-alt"></i>
-            </button>
+    <div class="col-md-8 overflow-auto max-vh-75">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Apellidos</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngIf="this.alumnos.length == 0">
+            <td colspan="4" class="text-info">
+              <div class="d-flex justify-content-center mt-5">
+                <i class="fa fa-spinner fa-spin fa-10x"></i>
+              </div>
+            </td>
+          </tr>
+          <tr *ngFor="let alumno of this.alumnosOrdenados()" [attr.idRow]="alumno.id">
+            <td class="min">
+              <img *ngIf="alumno.gender == 1" class="avatar" [src]="'assets/avatar-boy.png'" alt="Imagen de alumno">
+              <img *ngIf="alumno.gender == 2" class="avatar" [src]="'assets/avatar-girl.png'" alt="Imagen de alumno">
+              <!-- <img *ngIf="alumno.gender != 1 && alumno.gender != 2" class="avatar" [src]="'assets/avatar-boy.png'" alt="Imagen de alumno"> -->
+            </td>
+            <td>{{alumno.name}}</td>
+            <td>{{alumno.lastname}}</td>
+            <td class="min">
+              <button type="button" class="btn btn-sm mx-1 rounded-pill" (click)="falta(alumno.id)" title="Asignar falta"
+                [class.btn-info]="!faltas.includes(alumno.id)" [class.btn-warning]="faltas.includes(alumno.id)">
+                <i class="fas fa-calendar-times"></i>
+              </button>
+              <button type="button" class="btn btn-sm btn-success mx-1 rounded-pill"
+                [class.disabled]="faltas.includes(alumno.id)" (click)="seleccionar(alumno.id);diarioModal.show()"
+                title="Editar diario">
+                <i class="fas fa-book-open"></i>
+              </button>
+              <button type="button" class="btn btn-sm btn-primary mx-1 rounded-pill"
+                (click)="seleccionar(alumno.id);datosAlumnoModal.show()" title="Editar datos del alumno">
+                <i class="fas fa-edit"></i>
+              </button>
+              <button type="button" class="btn btn-sm btn-danger mx-1 rounded-pill"
+                (click)="seleccionar(alumno.id);confirmarEliminarModal.show()" title="Eliminar alumno">
+                <i class="fas fa-trash-alt"></i>
+              </button>
 
-          </td>
-        </tr>
-      </tbody>
-    </table>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
   </div>
 </main>

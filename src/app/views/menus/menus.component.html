@@ -2,52 +2,50 @@
 <app-header></app-header>
 <!-- TOAST -->
 <app-toast [toast]="this.toast"></app-toast>
-
 <!-- BARRA DE HERRAMIENTAS -->
-<nav id="toolbar" class="btn-toolbar justify-content-between p-2 d-flex ">
-  <div class="btn-group">
-    <p class="align-self-center m-0 font-weight-bold text-black-50 text-uppercase">Lista de aulas</p>
+<nav id="toolbar" class="btn-toolbar justify-content-between ">
+  <div class="btn-group p-2 pl-3">
+    <p class="align-self-center m-0 font-weight-bold text-black-50 text-uppercase">Mis menús</p>
   </div>
-  <div class="btn-group">
-    <button title="Agregar aula" class="btn btn-sm btn-light" routerLink="/aulas/formulario"
+  <div class="btn-group p-2 pr-3">
+    <button title="Agregar menú" class="btn btn-sm btn-light" routerLink="/menus/formulario"
       [class.disabled]="isLoading">
       <i class="fas fa-plus"></i>
     </button>
   </div>
 </nav>
-
 <!-- CUERPO -->
-<main class="container-fluid">
-  <table class="table">
-    <thead>
-      <tr>
-        <th scope="col">Nombre</th>
-        <th scope="col">Alergenos</th>
-        <th scope="col"></th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let menu of this.menus" [attr.idRow]="menu.id">
-        <td>{{menu.name}}</td>
-        <td>{{menu.allergens}}</td>
-        <td class="min">
-          <button type="button" class="btn btn-sm btn-primary mx-1 rounded-pill" title="Editar menú"
-            (click)="this.seleccionar(menu.id);menuFormModal.show();">
-            <i class="fas fa-edit"></i>
-          </button>
-          <button type="button" class="btn btn-sm btn-danger mx-1 rounded-pill"
-            (click)="this.seleccionar(item.id);eliminarModal.show()" title="Eliminar aula">
-            <i class="fas fa-trash-alt"></i>
-          </button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+<main class="container-xl">
+  <div class="row">
+    <table class="col-12 table">
+      <thead>
+        <tr>
+          <th scope="col">Nombre</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let menu of this.menus" [attr.idRow]="menu.id">
+          <td>{{menu.name}}</td>
+          <td class="min">
+            <button type="button" class="btn btn-sm btn-primary mx-1 rounded-pill" title="Editar menú"
+              routerLink="/menus/formulario" fragment="{{menu.id}}">
+              <i class="fas fa-edit"></i>
+            </button>
+            <button type="button" class="btn btn-sm btn-danger mx-1 rounded-pill"
+              (click)="this.seleccionar(item.id);eliminarModal.show()" title="Eliminar aula">
+              <i class="fas fa-trash-alt"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </main>
 
 <!-- MODAL CONFIRMAR ELIMINAR-->
 <div mdbModal #eliminarModal="mdbModal" class="modal fade" tabindex="-1" role="dialog"
-  aria-labelledby="eliminarModalLabel" aria-hidden="true" (onHide)="oneliminarModalHide()">
+  aria-labelledby="eliminarModalLabel" aria-hidden="true" (onHide)="seleccionar()">
   <div class="modal-dialog modal-sm" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -67,29 +65,4 @@
       </div>
     </div>
   </div>
-</div>
-
-<!-- MODAL FORMULARIO MENÚ -->
-<div mdbModal #menuFormModal="mdbModal" class="modal fade" tabindex="-1" role="dialog"
-  aria-labelledby="menuFormModalLabel" aria-hidden="true" (onShow)="onmenuFormModalShow()"
-  (onHide)="onmenuFormModalHide()">
-  <div class="modal-dialog modal-sm" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">{{this.selected > 0 ? 'Editar menú' : 'Nuevo menú'}}</h5>
-      </div>
-      <div class="modal-body">
-
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary" (click)="this.onmenuFormModalAccept()" data-dismiss="modal">
-          Guardar
-        </button>
-        <button id="confirmar-modal-close" type="button" class="btn btn-secondary" (click)="menuFormModal.hide()">
-          Cancelar
-        </button>
-      </div>
-    </div>
-  </div>
-
 </div>
