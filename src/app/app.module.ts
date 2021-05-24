@@ -27,6 +27,7 @@ import { DietariosComponent } from './views/dietarios/dietarios.component';
 import { DietariosPadresComponent } from './views/dietarios-padres/dietarios-padres.component';
 import { MenusFormularioComponent } from './views/menus-formulario/menus-formulario.component';
 import { HomeComponent } from './views/home/home.component';
+import { ContactComponent } from './views/contact/contact.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { HomeComponent } from './views/home/home.component';
     DietariosComponent,
     DietariosPadresComponent,
     MenusFormularioComponent,
-    HomeComponent
+    HomeComponent,
+    ContactComponent
   ],
   imports: [
     BrowserModule,

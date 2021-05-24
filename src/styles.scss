@@ -180,3 +180,7 @@ div.alergeno-9,
 div.alergeno-14 {
   @include calcularImagenAlergenoX(4);
 }
+
+app-header {
+  width: min-content;
+}

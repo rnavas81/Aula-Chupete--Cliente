@@ -207,4 +207,16 @@ export class UserService {
     }
     return this.http.put(url, data, extra);
   }
+  sendMessage(data){
+    const url = `${environment.API_SERVER}/message`;
+    const extra = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'X-Requested-With': 'XMLHttpRequest',
+        'Authorization': 'Bearer ' + this.getToken(),
+      })
+    }
+    return this.http.post(url, data, extra);
+
+  }
 }

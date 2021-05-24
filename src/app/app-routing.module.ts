@@ -24,6 +24,7 @@ import { DietariosComponent } from './views/dietarios/dietarios.component';
 import { DietariosPadresComponent } from './views/dietarios-padres/dietarios-padres.component';
 import { MenusFormularioComponent } from './views/menus-formulario/menus-formulario.component';
 import { HomeComponent } from './views/home/home.component';
+import { ContactComponent } from './views/contact/contact.component';
 
 const routes: Routes = [
   { path: "", component: HomeComponent, canActivate: [] },
@@ -31,6 +32,7 @@ const routes: Routes = [
   { path: "register", component: RegisterComponent },
   { path: "forget", component: ForgetComponent },
   { path: "profile", component: PerfilComponent, canActivate: [IsLoggedGuard] },
+  { path: "contact", component: ContactComponent },
   { path: "main", component: MainComponent, canActivate: [IsLoggedGuard] },
   { path: "main/parent", component: MainParentComponent, canActivate: [IsLoggedGuard] },
   { path: "dietarios/parent", component: DietariosPadresComponent, canActivate: [IsLoggedGuard] },
