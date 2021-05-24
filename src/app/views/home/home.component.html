@@ -1,0 +1,59 @@
+<main class="vw-100">
+  <section class="espacio"></section>
+  <section class="d-flex flex-wrap justify-content-center flex-column flex-md-row">
+    <div class="imagenes mx-4">
+      <mdb-carousel class="" [isControls]="false" [animation]="'fade'" [interval]="'3000'">
+        <mdb-carousel-item *ngFor="let item of imagenes;index as i">
+          <img class="d-block w-100" [src]="'assets/carusel/'+item" [alt]="'Imagen de carrusel '+i">
+        </mdb-carousel-item>
+      </mdb-carousel>
+    </div>
+    <div class="mx-4">
+      <p class="h1 text-center titulo">
+        Aula Chupetes
+      </p>
+      <p class="h2 text-center">
+        Gestiona tu aula
+      </p>
+      <p class="h2 text-center">
+        Enseña a los padres
+      </p>
+      <div class="d-flex justify-content-around">
+        <button class="btn btn-primary" routerLink="/register">Empieza ya</button>
+        <button class="btn btn-primary" routerLink="/login">Entra a tu aula</button>
+      </div>
+    </div>
+  </section>
+  <section class="espacio"></section>
+  <section class="d-flex flex-wrap justify-content-center flex-column flex-md-row">
+    <div class="bg-form p-3 mx-4 text-uppercase font-weight-bold lista">
+      <p>
+        Desde aquí puedes controlar tu aula:
+      </p>
+      <ul class="list-group">
+        <li class="list-unstyled">Información de alumnos</li>
+        <li class="list-unstyled">Control de faltas</li>
+        <li class="list-unstyled">Seguimiento de comidas</li>
+        <li class="list-unstyled">Seguimiento de la conducta</li>
+      </ul>
+    </div>
+    <div class="mx-4">
+      <img class="d-block logo" [src]="'assets/logo.png'" [alt]="'Logo de la aplicación'">
+    </div>
+  </section>
+</main>
+<footer class="border border-top mt-3 bg-form">
+  <div class=" d-flex">
+    <div class="flex-1 p2">
+      <div>Esta web está desarrollada por Rodrigo Navas🄯</div>
+    </div>
+    <div class="flex-1">
+      <div>
+        <p>
+          Para contactar con el desarrollador puede escribir a:
+          aula.chupetes@gmail.com
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>

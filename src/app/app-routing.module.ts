@@ -23,9 +23,10 @@ import { MenusComponent } from './views/menus/menus.component';
 import { DietariosComponent } from './views/dietarios/dietarios.component';
 import { DietariosPadresComponent } from './views/dietarios-padres/dietarios-padres.component';
 import { MenusFormularioComponent } from './views/menus-formulario/menus-formulario.component';
+import { HomeComponent } from './views/home/home.component';
 
 const routes: Routes = [
-  { path: "", component: LoginComponent, canActivate: [TestLoginGuard] },
+  { path: "", component: HomeComponent, canActivate: [] },
   { path: "login", component: LoginComponent, canActivate: [TestLoginGuard] },
   { path: "register", component: RegisterComponent },
   { path: "forget", component: ForgetComponent },
