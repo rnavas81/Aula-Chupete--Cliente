@@ -231,7 +231,7 @@
         <form id="padres-lista">
           <ul class="form-group overflow-auto">
             <li *ngFor="let padre of listaModalData()" class="form-outline form-inline">
-              <input class="form-check-input" type="checkbox" [id]="'child-'+padre.id" name="childs" [value]="padre.id">
+              <input class="" type="checkbox" [id]="'child-'+padre.id" name="childs" [value]="padre.id">
               <label class="form-check-label" [for]="'child-'+padre.id">{{padre.name+" "+padre.lastname}}</label>
             </li>
           </ul>

@@ -155,7 +155,7 @@
       <div class="modal-body max-vh-50 overflow-auto">
         <form class="" [formGroup]="formcargarMenu">
           <div *ngFor="let item of menus" class="form-check-inline w-100">
-            <input type="radio" formControlName="menus" [id]="'menu-'+item.id" class="form-check-input" [value]="item.id"/>
+            <input type="radio" formControlName="menus" [id]="'menu-'+item.id" class="" [value]="item.id"/>
             <label class="form-check-label" [for]="'menu-'+item.id">{{item.name}}</label>
           </div>
         </form>

@@ -28,6 +28,7 @@ import { DietariosPadresComponent } from './views/dietarios-padres/dietarios-pad
 import { MenusFormularioComponent } from './views/menus-formulario/menus-formulario.component';
 import { HomeComponent } from './views/home/home.component';
 import { ContactComponent } from './views/contact/contact.component';
+import { AlumnosListComponent } from './views/alumnos-list/alumnos-list.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import { ContactComponent } from './views/contact/contact.component';
     DietariosPadresComponent,
     MenusFormularioComponent,
     HomeComponent,
-    ContactComponent
+    ContactComponent,
+    AlumnosListComponent
   ],
   imports: [
     BrowserModule,

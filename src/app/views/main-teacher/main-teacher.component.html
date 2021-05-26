@@ -321,12 +321,12 @@
       </div>
       <div class="modal-body max-vh-50 overflow-auto">
         <form id="alumnos-lista">
-          <ul class="form-group overflow-auto">
+          <ul class="form-group list-unstyled overflow-auto">
             <li *ngFor="let alumno of comprobarListaAlumnos()">
-              <input class="form-check-input" type="checkbox" name="childs" [id]="'lista-alumno-'+alumno.id" [value]="alumno.id">
+              <input class="form-check-inline" type="checkbox" name="childs" [id]="'lista-alumno-'+alumno.id" [value]="alumno.id">
               <label class="form-check-label" [for]="'lista-alumno-'+alumno.id">
                 {{alumno.name+" "+alumno.lastname}}
-                {{alumno.birthday && fechaLocal(alumno.birthday)}}
+                ({{alumno.birthday && fechaLocal(alumno.birthday)}})
               </label>
             </li>
           </ul>

@@ -1,0 +1,21 @@
+.selected {
+  text-align: center;
+  background-color: #9abdb1;
+  color: white;
+}
+p {
+  word-wrap: break-word;
+  &.field-1{
+    width: fit-content;
+    min-width: 110px;
+  }
+  &.field-2{
+    height: fit-content;
+    min-height: 70px;
+  }
+}
+@media (min-width: 768px) {
+  #select-childs {
+    display: none;
+  }
+}

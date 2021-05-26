@@ -5,7 +5,7 @@
   <div class="flex-1">
     <div class="align-items-center p-0 opciones">
       <!-- OPCIONES PARA PROFESOR -->
-      <nav *ngIf='rol == "teacher"' class="navbar navbar-expand navbar-light d-flex">
+      <nav *ngIf='rol == "teacher"' class="navbar navbar-expand navbar-light d-flex flex-wrap">
         <a class="navbar-brand" routerLink="/main/teacher" [class.text-black-50]="selected != 'miaula'">Mi aula</a>
         <a class="navbar-brand" routerLink="/aulas" [class.text-black-50]="selected != 'aulas'">Aulas</a>
         <a class="navbar-brand" routerLink="/alumnos" [class.text-black-50]="selected != 'alumnos'">Alumnos</a>
@@ -16,7 +16,7 @@
       <!-- OPCIONES PARA PADRE -->
       <nav *ngIf='rol == "parent"' class="navbar navbar-expand navbar-light ">
         <a class="navbar-brand" routerLink="/main/parent" [class.text-black-50]="selected != 'miaula'">El aula</a>
-        <a class="navbar-brand" routerLink="/mishijos" [class.text-black-50]="selected != 'alumnos'">Mis hijos</a>
+        <a class="navbar-brand" routerLink="/alumnos/parent" [class.text-black-50]="selected != 'alumnos'">Mis hijos</a>
         <a class="navbar-brand" routerLink="/dietarios/parent"
           [class.text-black-50]="selected != 'dietario'">Dietario</a>
       </nav>
