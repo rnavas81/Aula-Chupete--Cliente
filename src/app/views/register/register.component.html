@@ -1,0 +1,68 @@
+<div class="container-md">
+  <div class="row vh-100 justify-content-center justify-content-md-end align-content-center">
+    <div class="col-lg-4 col-md-6">
+      <form class="align-self-center" [formGroup]="formulario" (ngSubmit)="onSubmit()">
+        <div *ngIf="mensaje.length>0" class="form-outline">
+          <span class="text-danger">{{mensaje}}</span>
+        </div>
+        <label class="text-center h3" for="user">Nuevo usuario</label>
+        <div class="form-outline mb-2">
+          <label for="user">Nombre</label>
+          <div class="input-group has-validation">
+            <input type="text" class="form-control" formControlName="name" id-test="name" placeholder="Nombre"
+              autofocus />
+          </div>
+          <span *ngIf="!this.formulario.controls['name'].valid" class="small text-danger">Su nombre es
+            demasiado largo</span>
+        </div>
+        <div class="form-outline mb-2">
+          <label for="user">Apellidos</label>
+          <div class="input-group has-validation">
+            <input type="text" class="form-control" formControlName="lastname" id-test="lastname"
+              placeholder="Apellidos" autofocus />
+          </div>
+          <span *ngIf="!this.formulario.controls['lastname'].valid" class="small text-danger">Sus apellidos
+            son
+            demasiado largo</span>
+        </div>
+        <div class="form-outline mb-2">
+          <label for="user">Dirección de correo</label>
+          <div class="input-group has-validation">
+            <input type="email" class="form-control" formControlName="email" id-test="email"
+              placeholder="Direccion de correo" autofocus />
+          </div>
+          <span *ngIf="!this.formulario.controls['email'].valid" class="small text-danger">Dirección de correo no
+            valida</span>
+        </div>
+        <div class="form-outline mt-2">
+          <label for="password">Contraseña</label>
+          <div class="input-group has-validation">
+            <input type="password" class="form-control" formControlName="password" id-test="password"
+              placeholder="Contraseña de usuario" />
+          </div>
+          <span *ngIf="!this.formulario.controls['password'].valid" class="small text-danger">Contraseña no
+            valida, maximo 32 caracteres
+          </span>
+        </div>
+        <div class="form-outline mb-2">
+          <div class="input-group has-validation">
+            <input type="password" class="form-control" formControlName="password2" id-test="password2"
+              placeholder="Confirmación de contraseña" />
+          </div>
+          <span *ngIf="!this.passConfirm" class="small text-danger">Las
+            contraseñas deben coincidir
+          </span>
+          </div>
+        <div class="form-outline form-inline justify-content-center">
+          <button type="submit" class="btn btn-primary w-100" id="btn-submit" id-test="btn-submit">
+            <i *ngIf="this.cargando" class="fa fa-spinner fa-spin"></i>
+            Acceder
+          </button>
+        </div>
+        <div class="form-outline form-inline justify-content-center">
+          <a routerLink="/login">Volver</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

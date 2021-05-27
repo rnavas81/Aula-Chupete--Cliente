@@ -1,0 +1,68 @@
+<!-- CABECERA -->
+<app-header></app-header>
+<!-- TOAST -->
+<app-toast [toast]="this.toast"></app-toast>
+<!-- BARRA DE HERRAMIENTAS -->
+<nav id="toolbar" class="btn-toolbar justify-content-between ">
+  <div class="btn-group p-2 pl-3">
+    <p class="align-self-center m-0 font-weight-bold text-black-50 text-uppercase">Mis menús</p>
+  </div>
+  <div class="btn-group p-2 pr-3">
+    <button title="Agregar menú" class="btn btn-sm btn-light" routerLink="/menus/formulario"
+      [class.disabled]="isLoading">
+      <i class="fas fa-plus"></i>
+    </button>
+  </div>
+</nav>
+<!-- CUERPO -->
+<main class="container-xl">
+  <div class="row">
+    <table class="col-12 table">
+      <thead>
+        <tr>
+          <th scope="col">Nombre</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let menu of this.menus" [attr.idRow]="menu.id">
+          <td>{{menu.name}}</td>
+          <td class="min">
+            <button type="button" class="btn btn-sm btn-primary mx-1 rounded-pill" title="Editar menú"
+              routerLink="/menus/formulario" fragment="{{menu.id}}">
+              <i class="fas fa-edit"></i>
+            </button>
+            <button type="button" class="btn btn-sm btn-danger mx-1 rounded-pill"
+              (click)="this.seleccionar(item.id);eliminarModal.show()" title="Eliminar aula">
+              <i class="fas fa-trash-alt"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</main>
+
+<!-- MODAL CONFIRMAR ELIMINAR-->
+<div mdbModal #eliminarModal="mdbModal" class="modal fade" tabindex="-1" role="dialog"
+  aria-labelledby="eliminarModalLabel" aria-hidden="true" (onHide)="seleccionar()">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Eliminar menú</h5>
+      </div>
+      <div class="modal-body">
+        <p>Va a eliminar el menú<br>¿desea continuar?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" (click)="this.oneliminarModalAcept();eliminarModal.hide()"
+          data-dismiss="modal">
+          Eliminar
+        </button>
+        <button id="confirmar-modal-close" type="button" class="btn btn-secondary" (click)="eliminarModal.hide()">
+          Cancelar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,80 @@
+<!-- CABECERA -->
+<app-header></app-header>
+<!-- TOAST -->
+<app-toast [toast]="this.toast"></app-toast>
+
+<!-- BARRA DE HERRAMIENTAS -->
+<nav id="toolbar" class="btn-toolbar justify-content-between p-2 d-flex ">
+  <div class="btn-group">
+    <p class="align-self-center m-0 font-weight-bold text-black-50 text-uppercase">Lista de aulas</p>
+  </div>
+  <div class="btn-group">
+    <button title="Agregar aula" class="btn btn-sm btn-light" routerLink="/aulas/formulario"
+      [class.disabled]="isLoading">
+      <i class="fas fa-plus"></i>
+    </button>
+  </div>
+</nav>
+
+<!-- CUERPO -->
+<main class="container-fluid">
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Nombre</th>
+        <th scope="col">Curso</th>
+        <th scope="col">Rango de edad</th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let aula of this.aulas" [attr.idRow]="aula.id">
+        <td>{{aula.name}}</td>
+        <td>{{aula.year}}/{{aula.year+1}}</td>
+        <td>{{aula.age.value}}</td>
+        <td class="min">
+          <button type="button" class="btn btn-sm mx-1 rounded-pill" [class.btn-success]="aula.default == 1"
+            [class.btn-warning]="aula.default == 0" (click)="default(aula.id)" title="Asignar aula por defecto"
+            [class.disabled]='aula.default==1'>
+            <i *ngIf="aula.default==0" class="fas fa-times"></i>
+            <i *ngIf="aula.default==1" class="fas fa-check"></i>
+          </button>
+          <button type="button" class="btn btn-sm btn-primary mx-1 rounded-pill" routerLink="/aulas/formulario"
+            fragment="{{aula.id}}" title="Editar datos del aula">
+            <i class="fas fa-edit"></i>
+          </button>
+          <button type="button" class="btn btn-sm btn-danger mx-1 rounded-pill" (click)="seleccionar(aula.id);eliminarModal.show()"
+            title="Eliminar aula">
+            <i class="fas fa-trash-alt"></i>
+          </button>
+
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</main>
+
+<!-- MODAL CONFIRMAR ELIMINAR-->
+<div mdbModal #eliminarModal="mdbModal" class="modal fade" tabindex="-1" role="dialog"
+  aria-labelledby="eliminarModalLabel" aria-hidden="true" (onHide)="seleccionar()">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Eliminar aula</h5>
+      </div>
+      <div class="modal-body">
+        <p>Va a eliminar el aula<br>¿desea continuar?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" (click)="this.eliminar();eliminarModal.hide()"
+          data-dismiss="modal">
+          Eliminar
+        </button>
+        <button id="confirmar-modal-close" type="button" class="btn btn-secondary"
+          (click)="eliminarModal.hide()">
+          Cancelar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

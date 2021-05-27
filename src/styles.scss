@@ -1,1 +1,186 @@
-/* You can add global styles to this file, and also import other style files */
+// Fuentes
+@font-face {
+  font-family: "IndieFlower";
+  src: url("./app/fonts/IndieFlower-Regular.ttf");
+}
+@font-face {
+  font-family: "OriginalSurfer";
+  src: url("./app/fonts/OriginalSurfer-Regular.ttf");
+}
+// @import "app/style/colors.scss";
+// @import "../node_modules/ng-uikit-pro-standard/assets/scss/bootstrap/bootstrap.scss";
+
+/*Small devices (landscape phones, 576px and up)*/
+@media (max-width: 576px) {
+  .d-hidden-sm {
+    display: none;
+  }
+}
+
+/*Medium devices (tablets, 768px and up)*/
+@media (max-width: 768px) {
+  .d-hidden-ml {
+    display: none;
+  }
+}
+
+/*Large devices (desktops, 992px and up)*/
+@media (max-width: 992px) {
+  .d-hidden-lg {
+    display: none;
+  }
+}
+
+/*Extra large devices (large desktops, 1200px and up)*/
+@media (max-width: 1200px) {
+  .d-hidden-xl {
+    display: none;
+  }
+}
+
+* {
+  font-family: "IndieFlower";
+  font-size: 1.1rem;
+}
+.min-vw-50 {
+  min-width: 50vw !important;
+}
+.max-vw-50 {
+  max-width: 50vw !important;
+}
+.min-vw-75 {
+  min-width: 75vw !important;
+}
+.max-vw-75 {
+  max-width: 75vw !important;
+}
+.min-vh-50 {
+  min-height: 50vh !important;
+}
+.max-vh-50 {
+  max-height: 50vh !important;
+}
+.min-vh-75 {
+  min-height: 75vh !important;
+}
+.max-vh-75 {
+  max-height: 75vh !important;
+}
+
+.fondo {
+  background-image: url("assets/background.jpg");
+  background-size: cover;
+}
+
+i.fas {
+  vertical-align: middle;
+}
+.modal-header * {
+  font-family: "OriginalSurfer";
+}
+.small {
+  font-size: 0.7rem;
+}
+.required::before {
+  content: "*";
+  color: rgb(167, 0, 0);
+}
+.no-resize {
+  resize: none;
+}
+.modal-open .modal {
+  overflow-y: auto !important;
+}
+.cursor-default {
+  cursor: default;
+}
+.bg-form {
+  background-color: #94949454;
+}
+table {
+  background-color: #d3d3d36b;
+  tr {
+    td {
+      .btn {
+        min-width: 42px;
+        min-height: 42px;
+        font-size: 1rem;
+      }
+
+      img.avatar {
+        max-width: 36px;
+      }
+    }
+
+    td.min {
+      width: 1%;
+      white-space: nowrap;
+    }
+  }
+}
+$assetPath: "~src/assets/";
+$alergenos: "#{$assetPath}alergenos.png";
+@mixin calcularImagenAlergenoX($x) {
+  background-position-x: $x * -32px;
+}
+@mixin calcularImagenAlergenoY($y) {
+  background-position-y: $y * -32px;
+}
+div[class*="alergeno-"] {
+  @include calcularImagenAlergenoY(1);
+  @include calcularImagenAlergenoX(2);
+  background-image: url(#{$alergenos});
+  width: 32px;
+  height: 32px;
+  background-color: #e0e0e0a8;
+  border-radius: 50%;
+}
+div.alergeno-1,
+div.alergeno-2,
+div.alergeno-3,
+div.alergeno-4,
+div.alergeno-5 {
+  @include calcularImagenAlergenoY(0);
+}
+div.alergeno-6,
+div.alergeno-7,
+div.alergeno-8,
+div.alergeno-9 {
+  @include calcularImagenAlergenoY(1);
+}
+div.alergeno-10,
+div.alergeno-11,
+div.alergeno-12,
+div.alergeno-13,
+div.alergeno-14 {
+  @include calcularImagenAlergenoY(2);
+}
+
+div.alergeno-1,
+div.alergeno-6,
+div.alergeno-10 {
+  @include calcularImagenAlergenoX(0);
+}
+div.alergeno-2,
+div.alergeno-7,
+div.alergeno-11 {
+  @include calcularImagenAlergenoX(1);
+}
+div.alergeno-3,
+div.alergeno-12 {
+  @include calcularImagenAlergenoX(2);
+}
+div.alergeno-4,
+div.alergeno-8,
+div.alergeno-13 {
+  @include calcularImagenAlergenoX(3);
+}
+div.alergeno-5,
+div.alergeno-9,
+div.alergeno-14 {
+  @include calcularImagenAlergenoX(4);
+}
+
+app-header {
+  width: min-content;
+}

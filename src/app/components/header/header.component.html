@@ -1,0 +1,37 @@
+<header class="d-flex sticky-top">
+  <div class="d-hidden-sm p-2">
+    <img class="logo btn m-0 p-0" [src]="'assets/logo.png'" alt="Aula Chupetes" srcset="" routerLink="/main">
+  </div>
+  <div class="flex-1">
+    <div class="align-items-center p-0 opciones">
+      <!-- OPCIONES PARA PROFESOR -->
+      <nav *ngIf='rol == "teacher"' class="navbar navbar-expand navbar-light d-flex flex-wrap">
+        <a class="navbar-brand" routerLink="/main/teacher" [class.text-black-50]="selected != 'miaula'">Mi aula</a>
+        <a class="navbar-brand" routerLink="/aulas" [class.text-black-50]="selected != 'aulas'">Aulas</a>
+        <a class="navbar-brand" routerLink="/alumnos" [class.text-black-50]="selected != 'alumnos'">Alumnos</a>
+        <a class="navbar-brand" routerLink="/menus" [class.text-black-50]="selected != 'menus'">Menus</a>
+        <a class="navbar-brand" routerLink="/dietarios/teacher"
+          [class.text-black-50]="selected != 'dietario'">Dietario</a>
+      </nav>
+      <!-- OPCIONES PARA PADRE -->
+      <nav *ngIf='rol == "parent"' class="navbar navbar-expand navbar-light ">
+        <a class="navbar-brand" routerLink="/main/parent" [class.text-black-50]="selected != 'miaula'">El aula</a>
+        <a class="navbar-brand" routerLink="/alumnos/parent" [class.text-black-50]="selected != 'alumnos'">Mis hijos</a>
+        <a class="navbar-brand" routerLink="/dietarios/parent"
+          [class.text-black-50]="selected != 'dietario'">Dietario</a>
+      </nav>
+    </div>
+  </div>
+  <div class="align-items-center d-flex justify-content-end p-0 pr-3">
+    <div class="align-self-center d-hidden-ml">
+      <p class="m-0 mr-3 text-black-50 font-weight-bold text-uppercase cursor-default nombre">
+        {{userService.name+" "+userService.lastname}}</p>
+    </div>
+    <div class="btn btn-sm btn-dark ml-md-2" title="Editar perfil" routerLink="/profile">
+      <i class="fas fa-user"></i>
+    </div>
+    <div class="btn btn-sm btn-outline-dark ml-1 ml-md-2 mr-2" title="Salir" (click)="salir()">
+      <i class="fas fa-sign-out-alt"></i>
+    </div>
+  </div>
+</header>

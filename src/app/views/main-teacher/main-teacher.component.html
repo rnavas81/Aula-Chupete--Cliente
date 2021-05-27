@@ -1,0 +1,346 @@
+<!-- CABECERA -->
+<app-header></app-header>
+<!-- TOAST -->
+<app-toast [toast]="this.toast"></app-toast>
+<!-- BARRA DE HERRAMIENTAS -->
+<nav id="toolbar" class="btn-toolbar justify-content-between p-2 d-flex ">
+  <div class="btn-group">
+    <p class="align-self-center m-0 font-weight-bold text-black-50 text-uppercase">{{aula.name}} ({{aula.age &&
+      aula.age.value}})</p>
+  </div>
+  <div class="btn-group d-flex">
+    <input class="form-control" type="date" id="current-date" title="Fecha" [value]="this.date.format('Y-MM-DD')"
+      (change)='changeDate($event.target.value)'>
+  </div>
+  <div class="btn-group">
+    <button title="Editar aula" class="btn btn-sm btn-light" routerLink="/aulas/formulario" fragment={{aula.id}}
+      [class.disabled]="isLoading">
+      <i class="fas fa-pencil-alt"></i>
+    </button>
+    <button id="open-alumno-modal" title="Agregar nuevo alumno" class="btn btn-sm btn-light"
+      (click)="datosAlumnoModal.show()" mdbWavesEffect [class.disabled]="isLoading">
+      <i class="fas fa-plus"></i>
+    </button>
+    <button id="open-alumnos-modal" title="Agregar alumno existente" class="btn btn-sm btn-light"
+      (click)="listaAlumnosModal.show()" mdbWavesEffect [class.disabled]="isLoading">
+      <i class="fas fa-search-plus"></i>
+    </button>
+  </div>
+</nav>
+<!-- CUERPO -->
+<main class="container-fluid">
+  <div class="row">
+    <div class="col-md-4">
+      <form class="">
+        <div class="form-group">
+          <label class="">Actividad</label>
+          <textarea class="form-control w-100 no-resize" rows="2" id='title'
+            (change)="onchangeDiario($event.target.value,$event.target.id)">{{title}}</textarea>
+          <label class="">Contenido</label>
+          <textarea class="form-control w-100 no-resize" rows="8" id='content'
+            (change)="onchangeDiario($event.target.value,$event.target.id)">{{content}}</textarea>
+        </div>
+      </form>
+    </div>
+    <div class="col-md-8 overflow-auto max-vh-75">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Apellidos</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngIf="this.alumnos.length == 0">
+            <td colspan="4" class="text-info">
+              <div class="d-flex justify-content-center mt-5">
+                <i class="fa fa-spinner fa-spin fa-10x"></i>
+              </div>
+            </td>
+          </tr>
+          <tr *ngFor="let alumno of this.alumnosOrdenados()" [attr.idRow]="alumno.id">
+            <td class="min">
+              <img *ngIf="alumno.gender == 1" class="avatar" [src]="'assets/avatar-boy.png'" alt="Imagen de alumno">
+              <img *ngIf="alumno.gender == 2" class="avatar" [src]="'assets/avatar-girl.png'" alt="Imagen de alumno">
+              <!-- <img *ngIf="alumno.gender != 1 && alumno.gender != 2" class="avatar" [src]="'assets/avatar-boy.png'" alt="Imagen de alumno"> -->
+            </td>
+            <td>{{alumno.name}}</td>
+            <td>{{alumno.lastname}}</td>
+            <td class="min">
+              <button type="button" class="btn btn-sm mx-1 rounded-pill" (click)="falta(alumno.id)" title="Asignar falta"
+                [class.btn-info]="!faltas.includes(alumno.id)" [class.btn-warning]="faltas.includes(alumno.id)">
+                <i class="fas fa-calendar-times"></i>
+              </button>
+              <button type="button" class="btn btn-sm btn-success mx-1 rounded-pill"
+                [class.disabled]="faltas.includes(alumno.id)" (click)="seleccionar(alumno.id);diarioModal.show()"
+                title="Editar diario">
+                <i class="fas fa-book-open"></i>
+              </button>
+              <button type="button" class="btn btn-sm btn-primary mx-1 rounded-pill"
+                (click)="seleccionar(alumno.id);datosAlumnoModal.show()" title="Editar datos del alumno">
+                <i class="fas fa-edit"></i>
+              </button>
+              <button type="button" class="btn btn-sm btn-danger mx-1 rounded-pill"
+                (click)="seleccionar(alumno.id);confirmarEliminarModal.show()" title="Eliminar alumno">
+                <i class="fas fa-trash-alt"></i>
+              </button>
+
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</main>
+<!-- MODAL DATOS ALUMNO -->
+<div mdbModal #datosAlumnoModal="mdbModal" class="modal fade" tabindex="-1" role="dialog"
+  aria-labelledby="mydatosAlumnoModalLabel" aria-hidden="true" (onShow)="ondatosAlumnoShow()"
+  (onHide)="ondatosAlumnoHide()">
+  <div class="modal-dialog modal-dialog-centered modal-fluid px-4" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">{{this.selected ==0 ? "Agregar un nuevo alumno" : "Editar alumno"}}</h5>
+        <button type="button" class="close" (click)="datosAlumnoModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body text-center container-fluid">
+        <form class="row" [formGroup]="formAlumnoDatos">
+          <div class="form-group col-md-6">
+            <label class="required">Nombre</label>
+            <input class="form-control w-100" type="text" formControlName="name" id="name" value="">
+            <div
+              *ngIf="(this.formAlumnoDatos.get('name').dirty || this.formAlumnoDatos.get('name').touched) && this.formAlumnoDatos.get('name').invalid"
+              class="alert alert-danger">
+              <div *ngIf="formAlumnoDatos.get('name').errors.required" class="small">
+                Este campo es necesario
+              </div>
+              <div *ngIf="formAlumnoDatos.get('name').errors.maxlength" class="small">
+                Maximo de 255 caracteres
+              </div>
+            </div>
+            <label class="required">Apellidos</label>
+            <input class="form-control w-100" type="text" formControlName="lastname" test-id="lastname" value="">
+            <div
+              *ngIf="(this.formAlumnoDatos.get('lastname').dirty || this.formAlumnoDatos.get('lastname').touched) && this.formAlumnoDatos.get('lastname').invalid"
+              class="alert alert-danger">
+              <div *ngIf="formAlumnoDatos.get('lastname').errors.required" class="small">
+                Este campo es necesario
+              </div>
+              <div *ngIf="formAlumnoDatos.get('lastname').errors.maxlength" class="small">
+                Maximo de 255 caracteres
+              </div>
+            </div>
+            <div class="d-flex flex-wrap justify-content-between">
+              <div class="">
+                <label class="m-0 align-self-center">Fecha de nacimiento</label>
+                <input type="date" class="form-control text-center" formControlName="birthday" test-id="birthday">
+              </div>
+              <div class="">
+                <label class="m-0 align-self-center">Genero</label>
+                <select class="form-control w-auto" formControlName="gender">
+                  <option value="0"></option>
+                  <option *ngFor='let option of genders' [value]="option.id">
+                    {{option.value}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="">
+              <label for="">Padres</label>
+              <div *ngFor="let padre of padres" class="form-group">
+                <input class="form-control" type="text" disabled readonly
+                  [value]="padre.padre.name+' '+padre.padre.lastname+' ('+padre.padre.contact+')'">
+              </div>
+            </div>
+          </div>
+          <div class="form-group col-md-6">
+            <label class="">Alergias</label>
+            <textarea rows="2" class="form-control w-100" type="text" formControlName="allergies"
+              id="allergies"></textarea>
+            <div
+              *ngIf="(this.formAlumnoDatos.get('allergies').dirty || this.formAlumnoDatos.get('allergies').touched) && this.formAlumnoDatos.get('allergies').invalid"
+              class="alert alert-danger">
+              <div *ngIf="formAlumnoDatos.get('allergies').errors.maxlength" class="small">
+                Maximo de 255 caracteres
+              </div>
+            </div>
+            <label class="">Intolerancias</label>
+            <textarea rows="2" class="form-control w-100" type="text" formControlName="intolerances"
+              id="intolerances"></textarea>
+            <div
+              *ngIf="(this.formAlumnoDatos.get('intolerances').dirty || this.formAlumnoDatos.get('intolerances').touched) && this.formAlumnoDatos.get('intolerances').invalid"
+              class="alert alert-danger">
+              <div *ngIf="formAlumnoDatos.get('intolerances').errors.maxlength" class="small">
+                Maximo de 255 caracteres
+              </div>
+            </div>
+            <label class="">Enfermedades</label>
+            <textarea rows="2" class="form-control w-100" type="text" formControlName="diseases"
+              id="diseases"></textarea>
+            <div
+              *ngIf="(this.formAlumnoDatos.get('diseases').dirty || this.formAlumnoDatos.get('diseases').touched) && this.formAlumnoDatos.get('diseases').invalid"
+              class="alert alert-danger">
+              <div *ngIf="formAlumnoDatos.get('diseases').errors.maxlength" class="small">
+                Maximo de 255 caracteres
+              </div>
+            </div>
+            <label class="">Observaciones</label>
+            <textarea rows="2" class="form-control w-100" type="text" formControlName="observations"
+              id="observations"></textarea>
+            <div
+              *ngIf="(this.formAlumnoDatos.get('observations').dirty || this.formAlumnoDatos.get('observations').touched) && this.formAlumnoDatos.get('observations').invalid"
+              class="alert alert-danger">
+              <div *ngIf="formAlumnoDatos.get('observations').errors.maxlength" class="small">
+                Maximo de 255 caracteres
+              </div>
+            </div>
+
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="cambiosModalAlumno()">{{selected==0 ? 'Agregar' :
+          'Guardar'}}</button>
+        <button type="button" class="btn btn-secondary" id="nuevo-alumno-modal-close"
+          (click)="datosAlumnoModal.hide()">Cancelar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL CONFIRMAR ELIMINAR-->
+<div mdbModal #confirmarEliminarModal="mdbModal" class="modal fade" tabindex="-1" role="dialog"
+  aria-labelledby="confirmarEliminarModalLabel" aria-hidden="true" (onHide)="seleccionar()">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Eliminar alumno</h5>
+      </div>
+      <div class="modal-body">
+        <p>¿Que vas a hacer con el alumno?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" (click)="this.eliminar();confirmarEliminarModal.hide()"
+          data-dismiss="modal">
+          Eliminar
+        </button>
+        <button type="button" class="btn btn-danger" (click)="this.quitar();confirmarEliminarModal.hide()"
+          data-dismiss="modal">
+          Quitar del aula
+        </button>
+        <button id="confirmar-modal-close" type="button" class="btn btn-secondary"
+          (click)="confirmarEliminarModal.hide()">
+          Cancelar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL DIARIO -->
+<div mdbModal #diarioModal="mdbModal" class="modal fade" tabindex="-1" role="dialog"
+  aria-labelledby="mydiarioModalLabel" aria-hidden="true" (onShow)="ondiarioModalShow()" (onHide)="ondiarioModalHide()">
+  <div class="modal-dialog modal-dialog-centered modal-fluid px-4" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Diario de {{date.format('DD-MM-Y')}}</h5>
+        <button type="button" class="close" (click)="diarioModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body text-center container-fluid">
+        <form class="row" [formGroup]="formDiarioAlumno">
+          <div class="form-group col-md-6">
+            <label class="">Actividad</label>
+            <textarea rows="4" class="form-control w-100 no-resize" type="text" formControlName="activity"
+              id="activity"></textarea>
+            <div
+              *ngIf="(this.formDiarioAlumno.get('activity').dirty || this.formDiarioAlumno.get('activity').touched) && this.formDiarioAlumno.get('activity').invalid"
+              class="text-danger">
+              <span *ngIf="formDiarioAlumno.get('activity').errors.maxlength" class="small">
+                Maximo de 1000 caracteres
+              </span>
+            </div>
+            <label class="">Comida</label>
+            <textarea rows="4" class="form-control w-100 no-resize" type="text" formControlName="food"
+              id="food"></textarea>
+            <div
+              *ngIf="(this.formDiarioAlumno.get('food').dirty || this.formDiarioAlumno.get('food').touched) && this.formDiarioAlumno.get('food').invalid"
+              class="text-danger">
+              <span *ngIf="formDiarioAlumno.get('food').errors.maxlength" class="small">
+                Maximo de 1000 caracteres
+              </span>
+            </div>
+          </div>
+          <div class="form-group col-md-6">
+            <label class="">Comportamiento</label>
+            <textarea rows="4" class="form-control w-100 no-resize" type="text" formControlName="behaviour"
+              id="behaviour"></textarea>
+            <div
+              *ngIf="(this.formDiarioAlumno.get('behaviour').dirty || this.formDiarioAlumno.get('behaviour').touched) && this.formDiarioAlumno.get('behaviour').invalid"
+              class="text-danger">
+              <span *ngIf="formDiarioAlumno.get('behaviour').errors.maxlength" class="small">
+                Maximo de 1000 caracteres
+              </span>
+            </div>
+            <label class="">Control de esfinteres</label>
+            <textarea rows="4" class="form-control w-100 no-resize" type="text" formControlName="sphincters"
+              id="sphincters"></textarea>
+            <div
+              *ngIf="(this.formDiarioAlumno.get('sphincters').dirty || this.formDiarioAlumno.get('sphincters').touched) && this.formDiarioAlumno.get('sphincters').invalid"
+              class="text-danger">
+              <span *ngIf="formDiarioAlumno.get('sphincters').errors.maxlength" class="small">
+                Maximo de 1000 caracteres
+              </span>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="cambiosDiarioAlumno();diarioModal.hide()">{{selected==0 ?
+          'Agregar' :
+          'Guardar'}}</button>
+        <button type="button" class="btn btn-secondary" id="diario-alumno-modal-close"
+          (click)="diarioModal.hide()">Cancelar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL LISTA DE ALUMNOS listaAlumnosModal -->
+<div mdbModal #listaAlumnosModal="mdbModal" class="modal fade" tabindex="-1" role="dialog"
+  aria-labelledby="listaAlumnosModal" aria-hidden="true" (onShow)="onlistaAlumnosShow()"
+  (onHide)="onlistaAlumnosHide()">
+  <div class="modal-dialog modal-md" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Agregar alumno</h5>
+      </div>
+      <div class="modal-body max-vh-50 overflow-auto">
+        <form id="alumnos-lista">
+          <ul class="form-group list-unstyled overflow-auto">
+            <li *ngFor="let alumno of comprobarListaAlumnos()">
+              <input class="form-check-inline" type="checkbox" name="childs" [id]="'lista-alumno-'+alumno.id" [value]="alumno.id">
+              <label class="form-check-label" [for]="'lista-alumno-'+alumno.id">
+                {{alumno.name+" "+alumno.lastname}}
+                ({{alumno.birthday && fechaLocal(alumno.birthday)}})
+              </label>
+            </li>
+          </ul>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="this.listaAlumnosAccept();listaAlumnosModal.hide()"
+          data-dismiss="modal">
+          Agregar
+        </button>
+        <button id="confirmar-modal-close" type="button" class="btn btn-secondary" (click)="listaAlumnosModal.hide()">
+          Cancelar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

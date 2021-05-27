@@ -1,0 +1,33 @@
+main{
+  .espacio {
+    height: 2rem;
+  }
+  .imagenes {
+    mdb-carousel {
+      display: block;
+      margin: auto;
+      max-width: 300px;
+      img {
+        max-width: 300px;
+        border-radius: 10%;
+        border: 1em solid white;
+      }
+    }
+  }
+  p.titulo {
+    font-family: 'OriginalSurfer';
+  }
+  .lista {
+    width: fit-content;
+  }
+  .logo {
+    max-width: 200px;
+  }
+  @media (max-width:400px) {
+
+  }
+  @media (max-width: 700px) {
+
+  }
+
+}

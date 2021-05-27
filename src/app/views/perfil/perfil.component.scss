@@ -1,0 +1,16 @@
+form {
+  label {
+    min-width: 200px;
+  }
+  input {
+    @media (min-width:770px) {
+      &#contact{
+        width: 375px;
+      }
+      &#password, &#password2 {
+        width: 225px;
+      }
+    }
+
+  }
+}

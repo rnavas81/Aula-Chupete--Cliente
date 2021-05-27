@@ -1,0 +1,128 @@
+<!-- CABECERA -->
+<app-header></app-header>
+<!-- TOAST -->
+<app-toast [toast]="this.toast"></app-toast>
+
+<!-- CUERPO -->
+<main class="container-md">
+  <!-- BARRA DE HERRAMIENTAS -->
+  <div class="row">
+    <nav id="toolbar" class="col-12 btn-toolbar justify-content-between p-2 d-flex">
+      <div class="btn-group">
+        <button title="Contactar con el administrador" class="btn btn-sm btn-light" routerLink="/contact">
+          <i class="fas fa-envelope"></i>
+        </button>
+      </div>
+      <div class="btn-group d-flex">
+      </div>
+      <div class="btn-group">
+        <button title="Guardar" class="btn btn-sm btn-light" (click)="guardar()">
+          <i class="fas fa-save"></i>
+        </button>
+        <button title="Cancelar" class="btn btn-sm btn-light" (click)="cancelar()">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+    </nav>
+  </div>
+  <!-- Formulario -->
+  <form class="align-self-center py-3 row rounded bg-form px-sm-5" [formGroup]="form">
+    <div class="col-md-12 form-group d-flex">
+      <label class="m-0 align-self-center required">Nombre</label>
+      <div class="flex-1">
+        <input class="form-control" type="text" formControlName="name" id="name">
+        <div *ngIf="(this.form.get('name').dirty || this.form.get('name').touched) && this.form.get('name').invalid">
+          <div *ngIf="form.get('name').errors.required" class="small text-danger">
+            Este campo es necesario
+          </div>
+          <div *ngIf="form.get('name').errors.maxlength" class="small text-danger">
+            Maximo de 255 caracteres
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-12 form-group d-flex">
+      <label class="m-0 align-self-center required">Apellidos</label>
+      <div class="flex-1">
+        <input class="form-control" type="text" formControlName="lastname" id="lastname">
+        <div
+          *ngIf="(this.form.get('lastname').dirty || this.form.get('lastname').touched) && this.form.get('lastname').invalid">
+          <div *ngIf="form.get('lastname').errors.required" class="small text-danger">
+            Este campo es necesario
+          </div>
+          <div *ngIf="form.get('lastname').errors.maxlength" class="small text-danger">
+            Maximo de 255 caracteres
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-12 form-group d-flex">
+      <label class="m-0 align-self-center required">Correo electrónico</label>
+      <div class="flex-1">
+        <input class="form-control" type="email" formControlName="email" id="email">
+        <div *ngIf="(this.form.get('email').dirty || this.form.get('email').touched) && this.form.get('email').invalid">
+          <div *ngIf="form.get('email').errors.required" class="small text-danger">
+            Este campo es necesario
+          </div>
+          <div *ngIf="form.get('email').errors.maxlength" class="small text-danger">
+            Maximo de 255 caracteres
+          </div>
+        </div>
+        <div *ngIf="!validEmail" class="small text-danger">
+          Ese email ya está en uso
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-12 form-group d-flex">
+      <label class="m-0 align-self-center">Contacto</label>
+      <div>
+        <input class="form-control text-center" type="text" formControlName="contact" id="contact">
+        <div
+          *ngIf="(this.form.get('contact').dirty || this.form.get('contact').touched) && this.form.get('contact').invalid">
+          <div *ngIf="form.get('contact').errors.maxlength" class="small text-danger">
+            Maximo de 32 caracteres
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-12 form-group mb-1 d-flex">
+      <label class="m-0 align-self-center">Contraseña</label>
+      <div class="flex-1">
+        <input class="form-control" type="password" formControlName="password" id="password">
+        <div
+          *ngIf="(this.form.get('password').dirty || this.form.get('password').touched) && this.form.get('password').invalid">
+          <div *ngIf="form.get('password').errors.minlength" class="small text-danger">
+            Minimo de 8 caracteres
+          </div>
+          <div *ngIf="form.get('password').errors.maxlength" class="small text-danger">
+            Maximo de 32 caracteres
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-12 form-group d-flex">
+      <label class="m-0 align-self-center">Confirmar contraseña</label>
+      <div class="flex-1">
+        <input class="form-control" type="password" formControlName="password2" id="password2">
+        <div
+          *ngIf="(this.form.get('password2').dirty || this.form.get('password2').touched) && this.form.get('password2').invalid">
+          <div *ngIf="form.get('password2').errors.minlength" class="small text-danger">
+            Minimo de 8 caracteres
+          </div>
+          <div *ngIf="form.get('password2').errors.maxlength" class="small text-danger">
+            Maximo de 255 caracteres
+          </div>
+        </div>
+        <div *ngIf="!validPasswords" class="small text-danger">
+          Las contraseñas no coinciden
+        </div>
+      </div>
+    </div>
+
+  </form>
+</main>

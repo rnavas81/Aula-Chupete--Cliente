@@ -1,27 +1,53 @@
-# Cliente
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.0.4.
+# Aula Chupetes - Servidor
+Aplicación para gestionar los datos de aulas infantiles.
+Esta aplicación tiene como objetivo facilitar la gestión de un aula infantil.
 
-## Development server
+[![Generic badge](https://img.shields.io/badge/Laravel-8.12-red.svg)](https://laravel.com)
+[![Generic badge](https://img.shields.io/badge/Passport-10.1-orange.svg)](https://laravel.com/docs/8.x/passport) 
+[![Generic badge](https://img.shields.io/badge/PHP-8.0.2-blue.svg)](https://www.php.net) 
+[![Generic badge](https://img.shields.io/badge/MariaDB-10.5.8-green.svg)](https://mariadb.org) 
+[![Generic badge](https://img.shields.io/badge/Docker-3.8-42b983.svg)](https://www.docker.com/) 
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+## Acerca de 
+Este repositorio contiene los ficheros para poner en marcha la parte del servidor de la aplicación Aula Chupetes.
 
-## Code scaffolding
+Este repositorio está relacionado con el Cliente web contenido en el repositorio de [Github](https://github.com/rnavas81/Aula-Chupete--Servidor)
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Manual de instalación local
 
-## Build
+### Docker
+Para realizar la instalación local debe tener instalado un cliente de docker
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+Para la instalación de Docker puede acceder a [Documentación oficial de Docker](https://docs.docker.com/get-docker/). Ahi encontrar la instacion dependiende de su sistema operativo ademas de guias sobre el uso de Docker.
 
-## Running unit tests
+### Git
+Aunque no es necesario, si es recomendable tener instalado git en la maquina donde se va a ejecutar la aplicación.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Para la instalación de git puede acceder a la [Documentación oficial](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
 
-## Running end-to-end tests
+### Puesta en marcha
+Para empezar debe descargar o clonar el repositorio.
+Si en la máquina donde va a ejecutar la aplicación tiene instalado git puede ejecutar el siguiente comando por consola :
+1. Situese en la carpeta que contendrá la aplicación
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+2. Descomprima o clone este repositorio
 
-## Further help
+    *git clone https://github.com/rnavas81/Aula-Chupete--Cliente*
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+3. Situese dentro de la carpeta Aula-Chupetes--Cliente
+
+    *cd Aula-Chupetes--Cliente*
+
+4. Lance el comando para inicializar el contenedor docker
+
+    *sudo docker-compose up -d*
+
+Es posible que la aplicación tarde un poco en estar operativa, por favor tenga paciencia 
+Si tiene dudas lance este comando para ver las últimas acciones
+
+*docker logs -f --until=2s*
+  
+
+### Su aplicación estará lista para funcionar!!!
+Puede acceder a ella desde la [url](http://localhost:1001)

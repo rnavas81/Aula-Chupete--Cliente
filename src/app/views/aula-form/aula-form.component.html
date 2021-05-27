@@ -1,0 +1,183 @@
+<!-- CABECERA -->
+<app-header></app-header>
+<!-- TOAST -->
+<app-toast [toast]="this.toast"></app-toast>
+<!-- CUERPO -->
+<main class="container-sm">
+  <!-- BARRA DE HERRAMIENTAS -->
+  <div class="row">
+    <nav id="toolbar" class="col-12 btn-toolbar justify-content-between p-2 d-flex ">
+      <div class="btn-group">
+      </div>
+      <div class="btn-group d-flex">
+      </div>
+      <div class="btn-group">
+        <!-- <button class="btn btn-sm btn-light" title="Filtrar" (click)="buscar()">
+              <i class="fas fa-search"></i>
+          </button>
+          <a class="btn btn-sm btn-light" title="Agregar entrada" (click)="agregarEntrada()">
+              <i class="fas fa-plus"></i>
+          </a> -->
+        <button title="Guardar" class="btn btn-sm btn-light" (click)="guardar()" [class.disabled]="isLoading">
+          <i class="fas fa-save"></i>
+        </button>
+        <button title="Cancelar" class="btn btn-sm btn-light" (click)="cancelar()" [class.disabled]="isLoading">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+    </nav>
+  </div>
+  <form class="align-self-center py-3 row rounded" [formGroup]="form">
+    <div class="col-md-6">
+      <div class="form-outline form-inline">
+        <input class="" type="checkbox" formControlName="default" id-test="default">
+        <label class="form-check-label" for="default">Activa</label>
+      </div>
+      <div class="form-group d-flex">
+        <label class="m-0 align-self-center required">Nombre</label>
+        <input class="form-control w-100" type="text" formControlName="name" test-id="name">
+      </div>
+      <div *ngIf="(this.form.dirty || this.form.touched) && this.form.get('name').invalid" class="alert alert-danger">
+        <div *ngIf="form.get('name').errors.required" class="small">
+          Este campo es necesario
+        </div>
+        <div *ngIf="form.get('name').errors.maxlength" class="small">
+          Maximo de 255 caracteres
+        </div>
+      </div>
+      <div class="d-flex flex-wrap justify-content-between">
+        <div class="form-group d-flex">
+          <label class="m-0 align-self-center">Curso</label>
+          <input type="number" class="form-control text-center year" formControlName="year" test-id="name"
+            (change)='changeYear($event.target.value)' min="0">
+          <div class="m-0 h2 pt-1">/</div>
+          <input type='text' readonly class="form-control text-center year" formControlName="year2">
+        </div>
+        <div class="form-group d-flex">
+          <label class="m-0 align-self-center">Grupo de edad</label>
+          <select class="form-control w-auto" formControlName="age_range">
+            <option *ngFor='let option of agesRange' [value]="option.id">{{option.value}}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group d-flex flex-wrap justify-content-between border-bottom pb-1">
+        <label class="m-0 align-self-center ">Lista de alumnos</label>
+        <div class="">
+          <button title="Agregar nuevo" class="btn btn-sm btn-light mr-1" (click)="nuevoModal.show()"
+            [class.disabled]="isLoading">
+            Agregar nuevo
+          </button>
+          <button title="Agregar existente" class="btn btn-sm btn-light mx-1" (click)="listaModal.show()"
+            [class.disabled]="isLoading">
+            Agregar existente
+          </button>
+          <button title="Eliminar" class="btn btn-sm btn-light ml-1" (click)="eliminarAlumno()"
+            [class.disabled]="isLoading">
+            Eliminar
+          </button>
+        </div>
+      </div>
+      <div class="form-group">
+        <select class="form-control w-100" formControlName="alumnos" multiple>
+          <option *ngFor='let alumno of lista' [value]="alumno.id">{{alumno.name+" "+alumno.lastname}}</option>
+        </select>
+      </div>
+    </div>
+  </form>
+</main>
+<!-- MODAL NUEVO ALUMNO -->
+<div mdbModal #nuevoModal="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mynuevoModalLabel"
+  aria-hidden="true" (onShow)="onNuevoModalShow()">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Agregar un nuevo alumno</h5>
+        <button type="button" class="close" (click)="nuevoModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body text-center">
+        <form class="" [formGroup]="formNuevoAlumno">
+          <div class="form-group">
+            <label class="required">Nombre</label>
+            <input class="form-control w-100" type="text" formControlName="name" id="name">
+            <div
+              *ngIf="(this.formNuevoAlumno.dirty || this.formNuevoAlumno.touched) && this.formNuevoAlumno.get('name').invalid"
+              class="alert alert-danger">
+              <div *ngIf="formNuevoAlumno.get('name').errors.required" class="small">
+                Este campo es necesario
+              </div>
+              <div *ngIf="formNuevoAlumno.get('name').errors.maxlength" class="small">
+                Maximo de 255 caracteres
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="required">Apellidos</label>
+            <input class="form-control w-100" type="text" formControlName="lastname" test-id="lastname" value="">
+            <div
+              *ngIf="(this.formNuevoAlumno.dirty || this.formNuevoAlumno.touched) && this.formNuevoAlumno.get('lastname').invalid"
+              class="alert alert-danger">
+              <div *ngIf="formNuevoAlumno.get('lastname').errors.required" class="small">
+                Este campo es necesario
+              </div>
+              <div *ngIf="formNuevoAlumno.get('lastname').errors.maxlength" class="small">
+                Maximo de 255 caracteres
+              </div>
+            </div>
+          </div>
+          <div class="form-group d-flex flex-wrap justify-content-between">
+            <div class="">
+              <label class="m-0 align-self-center">Fecha de nacimiento</label>
+              <input type="date" class="form-control text-center" formControlName="birthday" test-id="birthday">
+            </div>
+            <div class="">
+              <label class="m-0 align-self-center">Genero</label>
+              <select class="form-control w-auto" formControlName="gender">
+                <option value="0"></option>
+                <option *ngFor='let option of genders' [value]="option.id">
+                  {{option.value}}</option>
+              </select>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="agregarNuevoAlumno()">Agregar</button>
+        <button type="button" class="btn btn-secondary" (click)="cancelarAgregarNuevoAlumno()">Cancelar</button>
+        <button id="nuevo-alumno-modal-close" type="button" class="d-none" (click)="nuevoModal.hide()"></button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- MODAL LISTA DE ALUMNOS -->
+<div mdbModal #listaModal="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mylistaModalLabel"
+  aria-hidden="true" (onShow)="onlistaModalShow()">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Selecciona alumnos</h5>
+        <button type="button" class="close" (click)="listaModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body text-center">
+        <form id="alumnos-lista">
+          <ul class="form-group overflow-auto">
+            <li *ngFor="let alumno of childs" class="form-outline form-inline">
+              <input class="" type="checkbox" name="childs" id-test="default" [value]="alumno.id">
+              <label class="form-check-label" for="default">{{alumno.name+" "+alumno.lastname}}</label>
+            </li>
+          </ul>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="agregarAlumnoExistente()">Agregar</button>
+        <button type="button" class="btn btn-secondary" (click)="cancelarAgregarAlumnoExistente()">Cancelar</button>
+        <button id="alumnos-list-modal-close" type="button" class="d-none" (click)="listaModal.hide()"></button>
+      </div>
+    </div>
+  </div>
+</div>
