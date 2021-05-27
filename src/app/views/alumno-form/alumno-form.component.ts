@@ -60,8 +60,8 @@ export class AlumnoFormComponent implements OnInit {
     this.aulaService.getGenders().subscribe(
       (response: any) => {
         this.genders = response;
-      }, error => {
-        this.userService.exit();
+      }, (error: any) => {
+        if(error.status==403)this.userService.exit();
       }
     )
   }
@@ -74,7 +74,7 @@ export class AlumnoFormComponent implements OnInit {
         (response: any) => {
           this.data = response;
           this.loadData();
-        }, error => {
+        }, (error: any) => {
           this.userService.exit();
         }
       )

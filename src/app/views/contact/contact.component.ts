@@ -34,7 +34,7 @@ export class ContactComponent implements OnInit {
     if(this.form.valid){
       this.userService.sendMessage(this.form.value).subscribe(
         response=>this.toast={text:'Mensaje enviado',type:'sucess'}
-        ,error=>this.toast={text:'Error al enviar el mensaje',type:'error'}
+        ,(error:any)=>this.toast={text:'Error al enviar el mensaje',type:'error'}
       )
 
     }

@@ -29,7 +29,7 @@ export class AulasComponent implements OnInit {
     this.userService.getAulas().subscribe(
       (response: any) => {
         this.aulas = response;
-      }, error => {
+      }, (error: any) => {
         if(error.status==403) this.userService.exit();
         else this.toast = {
           text:'Error al recuperarlas aulas',
@@ -51,7 +51,7 @@ export class AulasComponent implements OnInit {
           text:'Se ha cambiado el aula activa',
           type:'success'
         }
-      }, error => {
+      }, (error: any) => {
         if(error.status==403) this.userService.exit();
         else this.toast = {
           text:'Error al cambiar el aula activa',
@@ -73,7 +73,7 @@ export class AulasComponent implements OnInit {
             text:'Se ha eliminado el aula',
             type:'success'
           }
-        }, error => {
+        }, (error: any) => {
           if(error.status==403) this.userService.exit();
           else this.toast = {
             text:'Error al eliminar el aula',

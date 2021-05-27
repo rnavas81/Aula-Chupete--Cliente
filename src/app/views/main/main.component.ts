@@ -29,7 +29,7 @@ export class MainComponent implements OnInit {
             this.userService.exit();
             break;
         }
-      }, error => {
+      }, (error: any) => {
         this.userService.exit();
       }
     )

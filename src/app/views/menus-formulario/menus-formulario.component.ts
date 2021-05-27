@@ -58,8 +58,8 @@ export class MenusFormularioComponent implements OnInit {
           this.semana = response;
           this.initData = JSON.parse(JSON.stringify(response));
 
-        }, error => {
-          this.userService.exit();
+        }, (error: any) => {
+          if(error.status==403)this.userService.exit();
         }
       )
     } else {

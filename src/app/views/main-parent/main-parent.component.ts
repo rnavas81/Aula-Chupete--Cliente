@@ -42,7 +42,7 @@ export class MainParentComponent implements OnInit {
       (response:any)=> {
         this.alumnos=response;
         this.cargarAlumno(this.alumnos[0].id);
-      },(error:any)=>{
+      }, (error: any) => {
         if(error.status==403)this.userService.exit();
         else this.toast={text:'Error al recuperar los alumnos',type:'error'}
       }

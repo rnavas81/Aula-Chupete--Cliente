@@ -29,7 +29,7 @@ export class MenusComponent implements OnInit {
     this.menusService.get().subscribe(
       (response:any)=>{
         this.menus=response;
-      },(error:any)=>{
+      }, (error: any) => {
         if(error.status==403)this.userService.exit();
         else this.toast={text:'Error al recuperar los menús',type:'error'}
       }

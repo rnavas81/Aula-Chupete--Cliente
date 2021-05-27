@@ -8,10 +8,10 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class HeaderComponent implements OnInit {
   @Input() selected: string = "";
-  rol:string = undefined;
+  rol: string = undefined;
 
   constructor(
-    public userService:UserService,
+    public userService: UserService,
   ) { }
 
   ngOnInit(): void {
@@ -29,13 +29,13 @@ export class HeaderComponent implements OnInit {
             this.userService.exit();
             break;
         }
-      }, error => {
-        this.userService.exit();
+      }, (error: any) => {
+        if (error.state == 403) this.userService.exit();
       }
     )
   }
 
-  salir(){
+  salir() {
     this.userService.exit();
   }
 }

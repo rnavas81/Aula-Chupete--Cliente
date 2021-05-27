@@ -36,8 +36,8 @@ export class AlumnosListComponent implements OnInit {
     this.aulaService.getGenders().subscribe(
       (response: any) => {
         this.genders = response;
-      }, error => {
-        this.userService.exit();
+      }, (error: any) => {
+        if(error.status==403)this.userService.exit();
       }
     )
     this.form = this.formBuilder.group({
@@ -66,8 +66,8 @@ export class AlumnosListComponent implements OnInit {
           item.value = id;
 
         }
-      }, error => {
-        if(error.state==403)this.userService.exit();
+      }, (error: any) => {
+        if(error.status==403)if(error.state==403)this.userService.exit();
       }
     )
   }

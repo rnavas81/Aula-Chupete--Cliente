@@ -14,7 +14,7 @@ import { UserService } from 'src/app/services/user.service';
 export class DietariosComponent implements OnInit {
   isLoading: boolean = false;
   dietario: any = [];
-  dietarioView:any[];
+  dietarioView: any[];
   aulas: any = [];
   aulaSelected: number = 0;
   menus: any;
@@ -25,7 +25,7 @@ export class DietariosComponent implements OnInit {
   modalData: any = {};
   formPlato: FormGroup;
   formGuardarMenu: FormGroup;
-  formcargarMenu:FormGroup;
+  formcargarMenu: FormGroup;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -52,7 +52,7 @@ export class DietariosComponent implements OnInit {
   ngOnInit(): void {
     this.cambiarDia();
   }
-  fechaLocal(fecha){
+  fechaLocal(fecha) {
     return moment(fecha).format('DD-MM-Y');
   }
   alLunes() {
@@ -78,7 +78,7 @@ export class DietariosComponent implements OnInit {
     this.aulaService.getDietarioSemana(this.aulaSelected, this.fecha.format('Y-MM-DD')).subscribe(
       (response: any) => {
         this.dietario = response;
-        this.dietarioView = this.dietarioService.formatear(this.dietario,this.fecha);
+        this.dietarioView = this.dietarioService.formatear(this.dietario, this.fecha);
       }, (error: any) => {
         if (error.status == 403) this.userService.exit();
         else this.toast = { text: 'Error al recuperar el dietario', type: 'error' }
@@ -90,7 +90,7 @@ export class DietariosComponent implements OnInit {
       (response: any) => {
         this.menus = response;
         this.ordernarMenus();
-      }, error => {
+      }, (error: any) => {
         if (error.status == 403) this.userService.exit();
         else this.toast = {
           text: 'Error al recuperar los menús',
@@ -99,10 +99,10 @@ export class DietariosComponent implements OnInit {
       }
     )
   }
-  ordernarMenus(){
-    this.menus.sort((a,b)=> {
-      if(a<b)return -1
-      else if(a>b) return 1;
+  ordernarMenus() {
+    this.menus.sort((a, b) => {
+      if (a < b) return -1
+      else if (a > b) return 1;
       else return 0;
     })
   }
@@ -116,7 +116,7 @@ export class DietariosComponent implements OnInit {
           this.aulaSelected = aula.id;
         }
         this.cargarDietario();
-      }, error => {
+      }, (error: any) => {
         if (error.status == 403) this.userService.exit();
         else this.toast = {
           text: 'Error al recuperar las aulas',
@@ -138,14 +138,14 @@ export class DietariosComponent implements OnInit {
   }
   nombreAlergeno(id) {
     const item = this.alergenos.find(x => x.id == id);
-    if(item)return item.value
+    if (item) return item.value
     else return ''
   }
 
   // MODAL EDITAR COMIDA
-  editarComida(idMenu,fecha, comida) {
+  editarComida(idMenu, fecha, comida) {
 
-    const menu = !!idMenu?this.dietario.find(x => x.id == idMenu):false;
+    const menu = !!idMenu ? this.dietario.find(x => x.id == idMenu) : false;
     this.modalData.comida = comida;
     this.modalData.date = fecha;
     if (menu) {
@@ -159,8 +159,8 @@ export class DietariosComponent implements OnInit {
 
     }
     this.modalData.alergenos.forEach((element) => {
-      var item = <HTMLInputElement>document.getElementById('alergenos-modal-'+element);
-      item.checked=true;
+      var item = <HTMLInputElement>document.getElementById('alergenos-modal-' + element);
+      item.checked = true;
     });
   }
   oneditarComidaModalShow() {
@@ -173,83 +173,83 @@ export class DietariosComponent implements OnInit {
   oneditarComidaModalAccept() {
 
     if (this.formPlato.valid) {
-      this.modalData.plato= this.formPlato.get('plato').value;
+      this.modalData.plato = this.formPlato.get('plato').value;
       this.modalData.alergenos = [];
-      document.querySelectorAll('input[name="alergenos-modal"]:checked').forEach((item:HTMLInputElement)=>{
+      document.querySelectorAll('input[name="alergenos-modal"]:checked').forEach((item: HTMLInputElement) => {
         this.modalData.alergenos.push(item.value);
       })
-      this.dietarioService.putComida(this.aulaSelected,this.modalData).subscribe(
-        (response:any)=>{
+      this.dietarioService.putComida(this.aulaSelected, this.modalData).subscribe(
+        (response: any) => {
           document.getElementById('editarComidaModal-close').click();
           const index = this.dietario.findIndex(x => !!x && x.id == response.id);
-          if(index!==-1){
-            this.dietario[index]=response;
+          if (index !== -1) {
+            this.dietario[index] = response;
           } else {
             const vacio = this.dietario.findIndex(x => !x);
-            this.dietario[vacio]=response;
+            this.dietario[vacio] = response;
           }
-          this.dietarioView = this.dietarioService.formatear(this.dietario,this.fecha);
-        },(error:any) =>{
-          if(error.status==403)this.userService.exit();
-          else this.toast={text:'Error al guardar los cambios',type:'error'}
+          this.dietarioView = this.dietarioService.formatear(this.dietario, this.fecha);
+        }, (error: any) => {
+          if (error.status == 403) this.userService.exit();
+          else this.toast = { text: 'Error al guardar los cambios', type: 'error' }
         }
       )
     }
   }
 
   /** MODAL GUARDAR COMO MENU */
-  onguardarMenuShow(){
+  onguardarMenuShow() {
     this.formGuardarMenu.reset();
   }
-  onguardarMenuHide(){
+  onguardarMenuHide() {
 
   }
-  onguardarMenuAcept(){
-    if(this.formGuardarMenu.valid){
+  onguardarMenuAcept() {
+    if (this.formGuardarMenu.valid) {
       var data = this.formGuardarMenu.value;
       data.dias = [];
 
-      this.dietarioView.forEach((element,index) => {
-        var menu = {...element.menu};
-        menu.dia=index+1;
-        delete(menu.id);
-        delete(menu.idAula);
-        delete(menu.date);
+      this.dietarioView.forEach((element, index) => {
+        var menu = { ...element.menu };
+        menu.dia = index + 1;
+        delete (menu.id);
+        delete (menu.idAula);
+        delete (menu.date);
         data.dias.push(menu);
       });
       this.menusService.add(data).subscribe(
-        (response:any)=> {
+        (response: any) => {
           document.getElementById('guardar-menu-close').click();
           this.menus.push(response);
-        }, (error:any)=> {
-          if(error.status==403)this.userService.exit();
-          else this.toast={text:'Error al crear el menú',type:'error'}
+        }, (error: any) => {
+          if (error.status == 403) this.userService.exit();
+          else this.toast = { text: 'Error al crear el menú', type: 'error' }
         }
       )
     }
   }
 
   /** MODAL CARGAR MENU */
-  oncargarMenuShow(){
-    if(!this.menus) this.getMenus();
+  oncargarMenuShow() {
+    if (!this.menus) this.getMenus();
 
   }
-  oncargarMenuHide(){
+  oncargarMenuHide() {
 
   }
-  oncargarMenuAcept(){
-    if(this.formcargarMenu.valid){
+  oncargarMenuAcept() {
+    if (this.formcargarMenu.valid) {
       const idMenu = this.formcargarMenu.value.menus;
-      this.dietarioService.asignarMenu(this.aulaSelected,idMenu,this.fecha.format('Y-MM-DD')).subscribe(
-        (response:any)=>{
+      this.dietarioService.asignarMenu(this.aulaSelected, idMenu, this.fecha.format('Y-MM-DD')).subscribe(
+        (response: any) => {
           document.getElementById('cargar-menu-close').click();
           console.log(response);
 
-          this.dietario=response;
-          this.dietarioView = this.dietarioService.formatear(this.dietario,this.fecha);
-        }, (error:any)=>{
-          if(error.status==403)this.userService.exit();
-          else this.toast={text:'Error al asignar el menú',type:'error'}
+          this.dietario = response;
+          this.dietarioView = this.dietarioService.formatear(this.dietario, this.fecha);
+        }, (error: any) => {
+          if (error.status == 403) this.userService.exit();
+          else this.toast = { text: 'Error al asignar el menú', type: 'error' }
         }
       )
 

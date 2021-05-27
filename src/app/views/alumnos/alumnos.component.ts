@@ -27,8 +27,8 @@ export class AlumnosComponent implements OnInit {
     this.alumnosService.get().subscribe(
       (response: any) => {
         this.alumnos = response;
-      }, error => {
-        this.userService.exit();
+      }, (error: any) => {
+        if(error.status==403)this.userService.exit();
       }
     )
   }
@@ -42,8 +42,8 @@ export class AlumnosComponent implements OnInit {
           this.alumnos.splice(index, 1);
           this.ordenarAlumnos();
           this.seleccionar();
-        }, error => {
-          this.userService.exit();
+        }, (error: any) => {
+          if(error.status==403)this.userService.exit();
         }
       )
     }

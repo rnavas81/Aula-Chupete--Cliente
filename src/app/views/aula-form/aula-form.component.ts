@@ -27,7 +27,7 @@ export class AulaFormComponent implements OnInit {
   genders: any = null;
   childs: any = null;
   lista: any = [];
-  toast: any = {};
+  toast: any;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -52,8 +52,8 @@ export class AulaFormComponent implements OnInit {
     aulaService.getAgeRange().subscribe(
       (response: any) => {
         this.agesRange = response;
-      }, error => {
-        userService.exit();
+      }, (error: any) => {
+        if(error.status==403)this.userService.exit();
       }
     )
   }
@@ -66,8 +66,8 @@ export class AulaFormComponent implements OnInit {
         (response: any) => {
           this.aula = response;
           this.loadData();
-        }, error => {
-          this.userService.exit();
+        }, (error: any) => {
+          if(error.status==403)this.userService.exit();
         }
       )
     } else this.loadData();
@@ -90,8 +90,8 @@ export class AulaFormComponent implements OnInit {
       this.aulaService.getGenders().subscribe(
         (response: any) => {
           this.genders = response;
-        }, error => {
-          this.userService.exit();
+        }, (error: any) => {
+          if(error.status==403)this.userService.exit();
         }
       )
     }
@@ -124,8 +124,8 @@ export class AulaFormComponent implements OnInit {
       this.userService.getChilds().subscribe(
         (response: any) => {
           this.childs = response;
-        }, error => {
-          this.userService.exit();
+        }, (error: any) => {
+          if(error.status==403)this.userService.exit();
         }
       )
 

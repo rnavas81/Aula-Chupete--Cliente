@@ -65,7 +65,7 @@ export class MainTeacherComponent implements OnInit {
           this.route.navigate(['/aulas/formulario'])
         }
 
-      }, error => {
+      }, (error: any) => {
         if (error.state == 403) this.userService.exit();
       }
     )
@@ -127,7 +127,7 @@ export class MainTeacherComponent implements OnInit {
           this.diarios = response.entradas;
         } else this.diarios = [];
 
-      }, error => {
+      }, (error: any) => {
         if (error.status == 403) this.userService.exit();
       }
     )
@@ -138,7 +138,7 @@ export class MainTeacherComponent implements OnInit {
     this.aulaService.setDiario(this.aula.id, this.date.format('Y-MM-DD'), data).subscribe(
       (response: any) => {
         this.idDiario = response.id;
-      }, error => {
+      }, (error: any) => {
         if (error.status == 403) this.userService.exit();
       }
     )
@@ -152,7 +152,7 @@ export class MainTeacherComponent implements OnInit {
         (response: any) => {
           this.idDiario = response.id;
           this.enviarFalta(id, falta);
-        }, error => {
+        }, (error: any) => {
           if (error.status == 403) this.userService.exit();
         }
       )
@@ -217,8 +217,8 @@ export class MainTeacherComponent implements OnInit {
       this.aulaService.getGenders().subscribe(
         (response: any) => {
           this.genders = response;
-        }, error => {
-          this.userService.exit();
+        }, (error: any) => {
+          if(error.status==403)this.userService.exit();
         }
       )
     }
@@ -258,7 +258,7 @@ export class MainTeacherComponent implements OnInit {
             this.alumnos[this.alumnos.findIndex(x => x.id == this.selected)] = response;
             document.getElementById('nuevo-alumno-modal-close').click();
             this.ordernarAlumnos();
-          }, error => {
+          }, (error: any) => {
             if (error.status == 403) this.userService.exit();
           }
         )
@@ -269,7 +269,7 @@ export class MainTeacherComponent implements OnInit {
             document.getElementById('nuevo-alumno-modal-close').click();
             this.alumnos.push(response);
             this.ordernarAlumnos();
-          }, error => {
+          }, (error: any) => {
             if (error.status == 403) this.userService.exit();
           }
         )
@@ -301,7 +301,7 @@ export class MainTeacherComponent implements OnInit {
         (response: any) => {
           this.idDiario = response.id;
           this.guardarDiarioAlumno();
-        }, error => {
+        }, (error: any) => {
           if (error.status == 403) this.userService.exit();
         }
       )
@@ -314,7 +314,7 @@ export class MainTeacherComponent implements OnInit {
         (response: any) => {
           const index = this.diarios.findIndex(x => x.idAlumno == response.idAlumno);
           this.diarios[index] = response;
-        }, error => {
+        }, (error: any) => {
           if (error.state == 403) this.userService.exit();
         }
       )
@@ -327,7 +327,7 @@ export class MainTeacherComponent implements OnInit {
       this.userService.getChilds().subscribe(
         (response: any) => {
           this.alumnosLista = response;
-        }, error => {
+        }, (error: any) => {
           if (error.status == 403) this.userService.exit();
         }
       )
