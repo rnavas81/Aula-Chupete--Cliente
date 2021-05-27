@@ -1,0 +1,171 @@
+<!-- CABECERA -->
+<app-header></app-header>
+<!-- TOAST -->
+<app-toast [toast]="this.toast"></app-toast>
+<!-- BARRA DE HERRAMIENTAS -->
+<nav id="toolbar" class="col-12 btn-toolbar justify-content-between p-2 d-flex">
+  <div class="btn-group">
+    <label class="m-0 align-self-center pr-2" for="name">Nombre:</label>
+    <input type="text" name="name" id="name" class="form-control" [value]="semana.name"
+      (change)="cambiarNombre($event.target.value)">
+    <div *ngIf="semana.name.lenght==0" class="small text-danger">
+      Este campo es necesario
+    </div>
+    <div *ngIf="semana.name.length>255" class="small text-danger">
+      Maximo de 255 caracteres
+    </div>
+  </div>
+  <div class="btn-group d-flex">
+  </div>
+  <div class="btn-group">
+    <button title="Guardar" class="btn btn-sm btn-light" (click)="guardar()">
+      <i class="fas fa-save"></i>
+    </button>
+    <button title="Restaurar" class="btn btn-sm btn-light" (click)="deshacerModal.show();">
+      <i class="fas fa-undo"></i>
+    </button>
+    <button title="Cancelar" class="btn btn-sm btn-light" (click)="cancelarModal.show()">
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+</nav>
+
+<!-- CUERPO -->
+<main class="container-fluid ">
+  <div class="row bg-form mx-2">
+    <div *ngFor="let item of semana.dias;" class="col-6 col-md dia px-0">
+      <div class="border-bottom border-dark d-flex flex-wrap text-uppercase titulo px-1 pt-2">
+        <div class="h5 text-center font-weight-bold">
+          {{dias[item.dia]}}
+        </div>
+      </div>
+
+      <div *ngFor="let comida of comidas" class="comida p-2 border-bottom">
+        <div class="d-flex">
+          <button class="btn btn-light btn-sm rounded-circle mr-2"
+            (click)="editarComida(item.id,comida.field);editarComidaModal.show();">
+            <i class="fas fa-edit small"></i>
+          </button>
+          <p class="font-weight-bold align-self-center m-0">
+            {{comida.title}}
+          </p>
+        </div>
+        {{item[comida.field]}}
+        <div *ngIf="item.lunch_allergens" class="d-flex">
+          <div *ngFor="let alergeno of item[comida.field+'_allergens']" class="mx-1" [class]="'alergeno-'+alergeno"
+            [title]="nombreAlergeno(alergeno)"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- MODAL FORMULARIO MENÚ -->
+<div mdbModal #editarComidaModal="mdbModal" class="modal fade" tabindex="-1" role="dialog"
+  aria-labelledby="editarComidaModalLabel" aria-hidden="true" (onShow)="oneditarComidaModalShow()"
+  (onHide)="oneditarComidaModalHide()">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div *ngFor="let comida of comidas">
+          <h5 class="modal-title" *ngIf="this.modalData.comida == comida.field">
+            {{comida.title}}
+          </h5>
+        </div>
+      </div>
+      <div class="modal-body">
+        <form class="container-fluid" [formGroup]="form">
+          <div class="row">
+            <div class="col-12">
+              <textarea formControlName="plato" class="form-control text-left no-resize" id="modal-plato"
+                rows="4">{{this.modalData.plato}}</textarea>
+              <div
+                *ngIf="(this.form.get('plato').dirty || this.form.get('plato').touched) && this.form.get('plato').invalid"
+                class="alert alert-danger">
+                <div *ngIf="form.get('plato').errors.required" class="small">
+                  Este campo es necesario
+                </div>
+                <div *ngIf="form.get('plato').errors.maxlength" class="small">
+                  Maximo de 255 caracteres
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <p class="h4">Alergenos</p>
+            </div>
+          </div>
+          <div class="row">
+            <div *ngFor="let item of alergenos" class="col-4">
+              <div class=" form-check-inline">
+                <input type="checkbox" class="form-check" name="alergenos-modal" [id]="'alergenos-modal-'+item.id"
+                  [value]="item.id">
+                <label [for]="'alergenos-modal-'+item.id" class="p-0">
+                  {{item.value}}
+                  <div class="float-right" [class]="'alergeno-'+item.id"></div>
+                </label>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="this.oneditarComidaModalAccept()" data-dismiss="modal">
+          Aceptar
+        </button>
+        <button id="editarComidaModal-close" type="button" class="btn btn-secondary" (click)="editarComidaModal.hide()">
+          Cancelar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL DESHACER -->
+<div mdbModal #deshacerModal="mdbModal" class="modal fade" tabindex="-1" role="dialog"
+  aria-labelledby="deshacerModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Deshacer los cambios</h5>
+      </div>
+      <div class="modal-body">
+        <p>Perderá los cambios no guardados<br>¿desea continuar?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" (click)="this.deshacer();deshacerModal.hide()"
+          data-dismiss="modal">
+          Continuar
+        </button>
+        <button id="confirmar-modal-close" type="button" class="btn btn-secondary" (click)="deshacerModal.hide()">
+          Cancelar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL CANCELAR -->
+<div mdbModal #cancelarModal="mdbModal" class="modal fade" tabindex="-1" role="dialog"
+  aria-labelledby="cancelarModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cancelar cambios</h5>
+      </div>
+      <div class="modal-body">
+        <p>Perderá los cambios no guardados<br>¿desea continuar?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" (click)="this.cancelar();cancelarModal.hide()"
+          data-dismiss="modal">
+          Continuar
+        </button>
+        <button id="confirmar-modal-close" type="button" class="btn btn-secondary" (click)="cancelarModal.hide()">
+          Cancelar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

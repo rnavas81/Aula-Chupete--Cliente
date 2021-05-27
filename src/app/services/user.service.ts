@@ -11,6 +11,7 @@ export class UserService {
   lastname: string;
   name: string;
   email: string;
+  contact: string;
   id: number;
 
 
@@ -18,33 +19,44 @@ export class UserService {
     private http: HttpClient,
     public router: Router,
   ) {
-
+    if (this.getUser()) this.setUser(this.getUser());
   }
   initial() {
-    this.name = "";
-    this.lastname = "";
-    this.email = "";
+    this.name = '';
+    this.lastname = '';
+    this.email = '';
+    this.contact = '';
     this.id = 0;
     sessionStorage.removeItem(environment.SESSIONSTORAGE_USER);
     sessionStorage.removeItem(environment.SESSIONSTORAGE_TOKEN);
   }
 
   set = (data: any) => {
-    if (data.hasOwnProperty("name")) this.name = data.name;
-    if (data.hasOwnProperty("lastname")) this.lastname = data.lastname;
-    if (data.hasOwnProperty("email")) this.email = data.email;
-    if (data.hasOwnProperty("id")) this.id = data.id;
+    this.setUser(data);
     const user = {
       id: this.id,
       name: this.name,
       lastname: this.lastname,
       email: this.email,
+      contact: this.contact,
     };
     sessionStorage.setItem(
       environment.SESSIONSTORAGE_USER,
       JSON.stringify(user)
     );
   };
+  setUser = (data: any) => {
+    if (data.hasOwnProperty('name')) this.name = data.name;
+    if (data.hasOwnProperty('lastname')) this.lastname = data.lastname;
+    if (data.hasOwnProperty('email')) this.email = data.email;
+    if (data.hasOwnProperty('contact')) this.contact = data.contact;
+    if (data.hasOwnProperty('id')) this.id = data.id;
+  }
+  getUser = () => {
+    return sessionStorage.getItem(environment.SESSIONSTORAGE_USER)
+      ? JSON.parse(sessionStorage.getItem(environment.SESSIONSTORAGE_USER))
+      : null;
+  }
   setToken = (token) => {
     sessionStorage.setItem(environment.SESSIONSTORAGE_TOKEN, token);
   };
@@ -93,7 +105,7 @@ export class UserService {
           this.initial();
           this.router.navigate(['/login']);
         })
-      );
+      ).subscribe();
   }
   register(data) {
     const url = `${environment.API_SERVER}/register`;
@@ -127,5 +139,84 @@ export class UserService {
       })
     }
     return this.http.get(url, extra);
+  }
+  getAulas() {
+    const url = `${environment.API_SERVER}/user/aulas/${this.id}`;
+    const extra = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'X-Requested-With': 'XMLHttpRequest',
+        'Authorization': 'Bearer ' + this.getToken(),
+      })
+    }
+    return this.http.get(url, extra);
+  }
+  getChilds() {
+    const url = `${environment.API_SERVER}/user/alumnos`;
+    const extra = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'X-Requested-With': 'XMLHttpRequest',
+        'Authorization': 'Bearer ' + this.getToken(),
+      })
+    }
+    return this.http.get(url, extra);
+  }
+  getParents(){
+    const url = `${environment.API_SERVER}/user/parents`;
+    const extra = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'X-Requested-With': 'XMLHttpRequest',
+        'Authorization': 'Bearer ' + this.getToken(),
+      })
+    }
+    return this.http.get(url, extra);
+  }
+  testEmail(email) {
+    const url = `${environment.API_SERVER}/user/email/${email}`;
+    const extra = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'X-Requested-With': 'XMLHttpRequest',
+        'Authorization': 'Bearer ' + this.getToken(),
+      })
+    }
+    return this.http.get(url, extra);
+  }
+  getParentChilds(){
+    const url = `${environment.API_SERVER}/user/childs`;
+    const extra = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'X-Requested-With': 'XMLHttpRequest',
+        'Authorization': 'Bearer ' + this.getToken(),
+      })
+    }
+    return this.http.get(url, extra);
+
+  }
+  save(data){
+    const url = `${environment.API_SERVER}/user`;
+    const extra = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'X-Requested-With': 'XMLHttpRequest',
+        'Authorization': 'Bearer ' + this.getToken(),
+      })
+    }
+    return this.http.put(url, data, extra);
+  }
+  sendMessage(data){
+    const url = `${environment.API_SERVER}/message`;
+    const extra = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'X-Requested-With': 'XMLHttpRequest',
+        'Authorization': 'Bearer ' + this.getToken(),
+      })
+    }
+    return this.http.post(url, data, extra);
+
   }
 }

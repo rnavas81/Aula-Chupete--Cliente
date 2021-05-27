@@ -1,0 +1,24 @@
+main {
+  form {
+    background-color: #b7b6b66b;
+
+    label {
+      padding-right: 5px;
+      &[for='default']{
+        min-width: unset;
+      }
+    }
+    .separador {
+      font-size: 1em;
+    }
+    .year {
+      max-width: 80px;
+    }
+
+  }
+}
+#alumnos-lista {
+  ul {
+    max-height: 50vh;
+  }
+}

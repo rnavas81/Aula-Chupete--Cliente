@@ -19,8 +19,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
-    private userService: UserService,
     private route: ActivatedRoute,
+    public userService: UserService,
   ) {
     var recordar = '';
     if (localStorage.getItem(environment.LOCALSTORAGE_REMEMBERME)) {

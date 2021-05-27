@@ -1,0 +1,22 @@
+.form-control-double {
+  height: calc(3em + 1.5rem + 2px);
+}
+
+img.avatar {
+  max-width: 36px;
+}
+nav {
+  div {
+    p,
+    select {
+      min-width: 200px;
+      margin: 0 10px 0 0;
+    }
+  }
+}
+div.caja-2 {
+  min-height: 120px;
+}
+div.caja-3 {
+  min-height: 90px;
+}

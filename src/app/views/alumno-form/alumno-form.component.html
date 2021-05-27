@@ -1,0 +1,246 @@
+<!-- CABECERA -->
+<app-header></app-header>
+<!-- TOAST -->
+<app-toast [toast]="this.toast"></app-toast>
+<!-- CUERPO -->
+<main class="container-sm">
+  <!-- BARRA DE HERRAMIENTAS -->
+  <div class="row">
+    <nav id="toolbar" class="col-12 btn-toolbar justify-content-between p-2 d-flex">
+      <div class="btn-group">
+      </div>
+      <div class="btn-group d-flex">
+      </div>
+      <div class="btn-group">
+        <button title="Guardar" class="btn btn-sm btn-light" (click)="guardar()" [class.disabled]="isLoading">
+          <i class="fas fa-save"></i>
+        </button>
+        <button title="Cancelar" class="btn btn-sm btn-light" (click)="cancelar()" [class.disabled]="isLoading">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+    </nav>
+  </div>
+  <!-- Formulario -->
+  <form class="align-self-center py-3 row rounded bg-form" [formGroup]="form">
+    <div class="col-md-6">
+      <div class="form-group">
+        <label class="m-0 align-self-center required">Nombre</label>
+        <input class="form-control w-100" type="text" formControlName="name" test-id="name">
+        <div *ngIf="(this.form.get('name').dirty || this.form.get('name').touched) && this.form.get('name').invalid">
+          <div *ngIf="form.get('name').errors.required" class="small text-danger">
+            Este campo es necesario
+          </div>
+          <div *ngIf="form.get('name').errors.maxlength" class="small text-danger">
+            Maximo de 255 caracteres
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="m-0 align-self-center required">Apellidos</label>
+        <input class="form-control w-100" type="text" formControlName="lastname" test-id="lastname">
+        <div
+          *ngIf="(this.form.get('lastname').dirty || this.form.get('lastname').touched) && this.form.get('lastname').invalid">
+          <div *ngIf="form.get('lastname').errors.required" class="small text-danger">
+            Este campo es necesario
+          </div>
+          <div *ngIf="form.get('lastname').errors.maxlength" class="small text-danger">
+            Maximo de 255 caracteres
+          </div>
+        </div>
+      </div>
+
+      <div class="d-flex flex-wrap justify-content-between">
+        <div class="form-group">
+          <label class="m-0 align-self-center">Fecha de nacimiento</label>
+          <input type="date" class="form-control text-center w-auto" formControlName="birthday" test-id="birthday">
+        </div>
+        <div class="form-group">
+          <label class="m-0 align-self-center">Genero</label>
+          <select class="form-control w-auto" formControlName="gender">
+            <option *ngFor='let option of genders' [value]="option.id">{{option.value}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="d-flex justify-content-between">
+          <label class="m-0 align-self-center">Padres</label>
+
+          <div class="btn-group">
+            <button title="Agregar nuevo" class="btn btn-sm btn-light" (click)="nuevoModal.show()"
+              [class.disabled]="isLoading">
+              <i class="fas fa-plus"></i>
+            </button>
+            <button title="Agregar existente" class="btn btn-sm btn-light" (click)="listaModal.show()"
+              [class.disabled]="isLoading">
+              <i class="fas fa-search-plus"></i>
+            </button>
+          </div>
+        </div>
+        <hr>
+        <div class="padres">
+          <div *ngFor='let padre of data.padres' class="d-flex">
+            <div class="flex-1 form-control">
+              {{padre.padre.name+' '+padre.padre.lastname}}
+              {{padre.padre.contact && '('+padre.padre.contact+')'}}
+            </div>
+            <button title="Quitar padre" class="btn btn-sm btn-danger my-1 rounded-circle position-absolute"
+              (click)="quitarPadre(padre.padre.id)">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+    <div class="col-md-6">
+      <div class="form-group">
+        <label class="m-0 align-self-center">Alergias</label>
+        <textarea class="form-control w-100 no-resize" rows="2" formControlName="allergies"
+          test-id="allergies"></textarea>
+        <div
+          *ngIf="(this.form.get('allergies').dirty || this.form.get('allergies').touched) && this.form.get('allergies').invalid">
+          <div *ngIf="form.get('name').errors.maxlength" class="small text-danger">
+            Maximo de 255 caracteres
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="m-0 align-self-center">Intolerancias</label>
+        <textarea class="form-control w-100 no-resize" rows="2" formControlName="intolerances"
+          test-id="intolerances"></textarea>
+        <div
+          *ngIf="(this.form.get('intolerances').dirty || this.form.get('intolerances').touched) && this.form.get('intolerances').invalid">
+          <div *ngIf="form.get('intolerances').errors.maxlength" class="small text-danger">
+            Maximo de 255 caracteres
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="m-0 align-self-center">Enfermedades</label>
+        <textarea class="form-control w-100 no-resize" rows="2" formControlName="diseases"
+          test-id="diseases"></textarea>
+        <div
+          *ngIf="(this.form.get('diseases').dirty || this.form.get('diseases').touched) && this.form.get('diseases').invalid">
+          <div *ngIf="form.get('diseases').errors.maxlength" class="small text-danger">
+            Maximo de 255 caracteres
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="m-0 align-self-center">Observaciones</label>
+        <textarea class="form-control w-100 no-resize" rows="2" formControlName="observations"
+          test-id="observations"></textarea>
+        <div
+          *ngIf="(this.form.get('observations').dirty || this.form.get('observations').touched) && this.form.get('observations').invalid">
+          <div *ngIf="form.get('observations').errors.maxlength" class="small text-danger">
+            Maximo de 255 caracteres
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</main>
+<!-- MODAL AGREGAR PADRE -->
+<div mdbModal #nuevoModal="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mynuevoModalLabel"
+  aria-hidden="true" (onShow)="onNuevoModalShow()">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Agregar un nuevo alumno</h5>
+        <button type="button" class="close" (click)="nuevoModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body text-center">
+        <form class="" [formGroup]="formNuevo">
+          <div class="form-group">
+            <label class="required">Nombre</label>
+            <input class="form-control w-100" type="text" formControlName="name" id="name">
+            <div *ngIf="(this.formNuevo.dirty || this.formNuevo.touched) && this.formNuevo.get('name').invalid">
+              <div *ngIf="formNuevo.get('name').errors.required" class="small-danger">
+                Este campo es necesario
+              </div>
+              <div *ngIf="formNuevo.get('name').errors.maxlength" class="small-danger">
+                Maximo de 255 caracteres
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="required">Apellidos</label>
+            <input class="form-control w-100" type="text" formControlName="lastname" id="lastname">
+            <div *ngIf="(this.formNuevo.dirty || this.formNuevo.touched) && this.formNuevo.get('lastname').invalid">
+              <div *ngIf="formNuevo.get('lastname').errors.required" class="small-danger">
+                Este campo es necesario
+              </div>
+              <div *ngIf="formNuevo.get('lastname').errors.maxlength" class="small-danger">
+                Maximo de 255 caracteres
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="required">Correo electronico</label>
+            <input class="form-control w-100" type="text" formControlName="email" id="email">
+            <div *ngIf="(this.formNuevo.dirty || this.formNuevo.touched) && this.formNuevo.get('email').invalid">
+              <div *ngIf="formNuevo.get('email').errors.required" class="small-danger">
+                Este campo es necesario
+              </div>
+              <div *ngIf="formNuevo.get('email').errors.maxlength" class="small-danger">
+                Maximo de 255 caracteres
+              </div>
+              <div *ngIf="formNuevo.get('email').errors.email" class="small-danger">
+                Formato de correo no valido
+              </div>
+            </div>
+            <div *ngIf="emailInUse" class="small-danger">
+              El email está en uso
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="required">Número de contacto</label>
+            <input class="form-control w-100" type="text" formControlName="contact" id="contact">
+            <div *ngIf="(this.formNuevo.dirty || this.formNuevo.touched) && this.formNuevo.get('contact').invalid">
+              <div *ngIf="formNuevo.get('contact').errors.maxlength" class="small-danger">
+                Maximo de 255 caracteres
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="onnuevoModalAcept()">Agregar</button>
+        <button type="button" class="btn btn-secondary" id="nuevoModalClose" (click)="nuevoModal.hide()">Cancelar</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- MODAL LISTA DE PADRES -->
+<div mdbModal #listaModal="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mylistaModalLabel"
+  aria-hidden="true" (onShow)="onlistaModalShow()" (onHidden)="onlistaModalHide()">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Selecciona padre</h5>
+        <button type="button" class="close" (click)="listaModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body text-center">
+        <form id="padres-lista">
+          <ul class="form-group overflow-auto">
+            <li *ngFor="let padre of listaModalData()" class="form-outline form-inline">
+              <input class="" type="checkbox" [id]="'child-'+padre.id" name="childs" [value]="padre.id">
+              <label class="form-check-label" [for]="'child-'+padre.id">{{padre.name+" "+padre.lastname}}</label>
+            </li>
+          </ul>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="onlistaModalAccept();listaModal.hide()">Agregar</button>
+        <button type="button" class="btn btn-secondary" (click)="listaModal.hide()">Cancelar</button>
+      </div>
+    </div>
+  </div>
+</div>

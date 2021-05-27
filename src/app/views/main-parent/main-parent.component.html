@@ -1,0 +1,109 @@
+<!-- CABECERA -->
+<app-header></app-header>
+<!-- TOAST -->
+<app-toast [toast]="this.toast"></app-toast>
+<!-- BARRA DE HERRAMIENTAS -->
+<nav id="toolbar" class="btn-toolbar justify-content-between container-md py-2 px-0">
+  <div class="btn-group">
+    <div *ngIf="!!alumno" class="mr-2">
+      <img *ngIf="alumno.gender == 1" class="avatar" [src]="'assets/avatar-boy.png'" alt="Imagen de alumno"
+        [title]="alumno.name+' '+alumno.lastname">
+      <img *ngIf="alumno.gender == 2" class="avatar" [src]="'assets/avatar-girl.png'" alt="Imagen de alumno"
+        [title]="alumno.name+' '+alumno.lastname">
+    </div>
+    <p *ngIf="alumnos.length==1"
+      class="align-self-center font-weight-bold text-black-50 text-uppercase cursor-default">
+      {{alumnos[0].name}} {{alumnos[0].lastname}}
+    </p>
+    <select class="form-control" *ngIf="alumnos.length>1" (change)="cargarAlumno($event.target.value)" placeholder='Mis hijos'>
+      <option *ngFor="let item of alumnos;index as i" [value]="item.id">{{item.name+' '+item.lastname}}</option>
+    </select>
+    <p *ngIf="aulas.length==1"
+      class="align-self-center font-weight-bold text-black-50 text-uppercase cursor-default">{{aulas[0].name}}
+      ({{aulas[0].year}}/{{aulas[0].year+1}})</p>
+    <select class="form-control" *ngIf="aulas.length>1" (change)="cambiarAula($event.target.value)" placeholder='Las aulas'>
+      <option *ngFor="let item of aulas;index as i" [value]="item.id">{{item.name}} ({{item.year}}/{{item.year+1}})
+      </option>
+    </select>
+  </div>
+  <div class="btn-group d-flex">
+  </div>
+  <div class="btn-group">
+    <input class="form-control text-center" type="date" name="fecha" id="fecha" [value]="fecha"
+      (change)="cambiarFecha($event.target.value)">
+  </div>
+</nav>
+<!-- CUERPO -->
+<main class="container-md bg-form pb-3">
+  <div class="row py-2">
+    <div class="col col-md-auto  order-0 order-lg-1">
+      <label for="title" class="w-auto px-2">Hoy</label>
+    </div>
+    <div class="col-12 col-lg order-1">
+      <div class="overflow-auto form-control">
+        {{hayDiario() ? diario.title : 'Aún no hemos hecho nada aquí'}}
+      </div>
+    </div>
+  </div>
+  <div class="row py-2">
+    <div class="col-md-3 col-lg-1">
+      <label for="">Que hacemos</label>
+    </div>
+    <div class="col-md-9 col-lg-5">
+      <div class="overflow-auto form-control caja-2">
+        {{diario && diario.content}}
+      </div>
+    </div>
+    <div class="col-md-3 col-lg-1 mt-2 mt-md-0">
+      <label for="">Que comemos</label>
+    </div>
+    <div class="col-md-9 col-lg-5 mt-2 mt-md-0">
+      <div class="overflow-auto form-control caja-2">
+        <div class="m-0 d-flex flex-wrap">
+          {{dietary.breakfast}}
+          <div *ngFor="let alergeno of dietary.breakfast_allergens" class="mx-1" [class]="'alergeno-'+alergeno"
+            [title]="nombreAlergeno(alergeno)">
+          </div>
+        </div>
+        <div class="m-0 d-flex flex-wrap">
+          {{dietary.lunch}}
+          <div *ngFor="let alergeno of dietary.lunch_allergens" class="mx-1" [class]="'alergeno-'+alergeno"
+            [title]="nombreAlergeno(alergeno)">
+          </div>
+        </div>
+        <div class="m-0 d-flex flex-wrap">
+          {{dietary.desert}}
+          <div *ngFor="let alergeno of dietary.desert_allergens" class="mx-1" [class]="'alergeno-'+alergeno"
+            [title]="nombreAlergeno(alergeno)">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="hayDiario() && diario.entrada.absence==1" class="row">
+    <div class="col">
+      <div class="overflow-auto form-control">Hoy he faltado</div>
+    </div>
+  </div>
+  <div *ngIf="hayDiario() && diario.entrada.absence!=1" class="row">
+    <div class="col-md-6">
+      <label for="">Que he hecho yo</label>
+      <div class="overflow-auto form-control caja-3">{{hayDiario() && diario.entrada.activity}}</div>
+    </div>
+    <div class="col-md-6">
+      <label for="">Como he comido</label>
+      <div class="overflow-auto form-control caja-3">{{hayDiario() && diario.entrada.food}}</div>
+    </div>
+  </div>
+  <div *ngIf="hayDiario() && diario.entrada.absence!=1" class="row">
+    <div class="col-md-6">
+      <label for="">Como me porto</label>
+      <div class="overflow-auto form-control caja-3">{{hayDiario() && diario.entrada.behaviour}}</div>
+    </div>
+    <div class="col-md-6">
+      <label for="">En el baño</label>
+      <div class="overflow-auto form-control caja-3">{{hayDiario() && diario.entrada.sphincters}}</div>
+    </div>
+  </div>
+</main>
+

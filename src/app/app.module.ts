@@ -15,6 +15,20 @@ import { ForgetComponent } from './views/forget/forget.component';
 import { MainComponent } from './views/main/main.component';
 import { MainTeacherComponent } from './views/main-teacher/main-teacher.component';
 import { MainParentComponent } from './views/main-parent/main-parent.component';
+import { HeaderComponent } from './components/header/header.component';
+import { AulaFormComponent } from './views/aula-form/aula-form.component';
+import { AulasComponent } from './views/aulas/aulas.component';
+import { AlumnosComponent } from './views/alumnos/alumnos.component';
+import { AlumnoFormComponent } from './views/alumno-form/alumno-form.component';
+import { ToastComponent } from './components/toast/toast.component';
+import { PerfilComponent } from './views/perfil/perfil.component';
+import { MenusComponent } from './views/menus/menus.component';
+import { DietariosComponent } from './views/dietarios/dietarios.component';
+import { DietariosPadresComponent } from './views/dietarios-padres/dietarios-padres.component';
+import { MenusFormularioComponent } from './views/menus-formulario/menus-formulario.component';
+import { HomeComponent } from './views/home/home.component';
+import { ContactComponent } from './views/contact/contact.component';
+import { AlumnosListComponent } from './views/alumnos-list/alumnos-list.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +38,21 @@ import { MainParentComponent } from './views/main-parent/main-parent.component';
     ForgetComponent,
     MainComponent,
     MainTeacherComponent,
-    MainParentComponent
+    MainParentComponent,
+    HeaderComponent,
+    AulaFormComponent,
+    AulasComponent,
+    AlumnosComponent,
+    AlumnoFormComponent,
+    ToastComponent,
+    PerfilComponent,
+    MenusComponent,
+    DietariosComponent,
+    DietariosPadresComponent,
+    MenusFormularioComponent,
+    HomeComponent,
+    ContactComponent,
+    AlumnosListComponent
   ],
   imports: [
     BrowserModule,

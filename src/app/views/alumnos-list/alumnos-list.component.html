@@ -1,0 +1,73 @@
+<!-- CABECERA -->
+<app-header></app-header>
+<!-- TOAST -->
+<app-toast [toast]="this.toast"></app-toast>
+<!-- CUERPO -->
+<main>
+  <div class="container-fluid">
+    <div class="row">
+      <!-- Lista de alumnos -->
+      <div class="col-12 col-md-3 ">
+        <div class="p-2 h-100">
+          <div class="border p-2 bg-form h-100 d-hidden-ml">
+            <div *ngFor="let item of alumnos">
+              <div (click)="loadChild(item.id,'list')" class="px-1" [class.selected]="item.id==selected"
+                [class.rounded]="item.id==selected">
+                {{item.name}} {{item.lastname}}
+              </div>
+            </div>
+          </div>
+          <select class="form-control w-100" id="select-childs" (change)="loadChild($event.target.value,'select')">
+            <option value="0"></option>
+            <option *ngFor='let item of alumnos' [value]="item.id">{{item.name}} {{item.lastname}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-12 col-md-9">
+        <div class="p-2">
+          <div class="px-4 py-2 bg-form">
+            <form class="" [formGroup]="form">
+              <div class="form-group">
+                <label class="m-0 align-self-center">Nombre</label>
+                <p class="form-control w-100">{{data.name}}</p>
+              </div>
+              <div class="form-group">
+                <label class="m-0 align-self-center">Apellidos</label>
+                <p class="form-control w-100">{{data.lastname}}</p>
+              </div>
+              <div class="d-flex flex-wrap">
+                <div class="form-group flex-1">
+                  <label class="m-0 align-self-center">Fecha de nacimiento</label>
+                  <p class="form-control text-center p-2 field-1">{{formatoLocal()}}</p>
+
+                </div>
+                <div class="form-group flex-1">
+                  <label class="m-0 align-self-center">Genero</label>
+                  <p class="form-control text-center p-2 field-1">{{getGender()}}</p>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="m-0 align-self-center">Alergias</label>
+                <p class="form-control w-100 field-2">{{data.allergies}}</p>
+              </div>
+              <div class="form-group">
+                <label class="m-0 align-self-center">Intolerancias</label>
+                <p class="form-control w-100 field-2">{{data.intolerances}}</p>
+              </div>
+              <div class="form-group">
+                <label class="m-0 align-self-center">Enfermedades</label>
+                <p class="form-control w-100 field-2">{{data.diseases}}</p>
+              </div>
+              <div class="form-group">
+                <label class="m-0 align-self-center">Observaciones</label>
+                <p class="form-control w-100 field-2">{{data.observations}}</p>
+              </div>
+            </form>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>

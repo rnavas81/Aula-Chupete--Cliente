@@ -11,13 +11,12 @@ export class MainComponent implements OnInit {
 
   constructor(
     private route: Router,
-    private userService: UserService,
+    public userService: UserService,
   ) { }
 
   ngOnInit(): void {
     this.userService.getRol().subscribe(
       (response: any) => {
-        console.log(response);
         switch (response.rol) {
           case 'parent':
             this.route.navigate(["/main/parent"]);
@@ -30,10 +29,9 @@ export class MainComponent implements OnInit {
             this.userService.exit();
             break;
         }
-        if (response == 'parent') {
-
-        }
-      },
+      }, (error: any) => {
+        this.userService.exit();
+      }
     )
   }
 

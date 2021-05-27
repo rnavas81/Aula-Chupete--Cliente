@@ -1,0 +1,45 @@
+<!-- CABECERA -->
+<app-header *ngIf="isLogged"></app-header>
+<!-- TOAST -->
+<app-toast [toast]="this.toast"></app-toast>
+
+<!-- CUERPO -->
+<main class="container-md">
+  <section class="row">
+    <div class="col-md-6">
+      <form class="align-self-center mt-3 py-3 row rounded bg-form px-sm-5" [formGroup]="form">
+        <p class="">
+          Para contactar con nosotros puedes mandar un correo electrónico a aula.chupetes@gmail.com
+        </p>
+        <p class="">
+          O escribenos tu consulta:
+        </p>
+        <div class="w-100"
+          *ngIf="(this.form.get('message').dirty || this.form.get('message').touched) && this.form.get('message').invalid">
+          <div *ngIf="form.get('message').errors.required" class="small text-danger">
+            Este campo es necesario
+          </div>
+          <div *ngIf="form.get('message').errors.maxlength" class="small text-danger">
+            Maximo de 255 caracteres
+          </div>
+        </div>
+        <textarea class="form-control no-resize" rows="10" cols="100" formControlName="message" id="message"></textarea>
+
+        <div class="d-flex w-100 justify-content-end mt-3">
+          <button class="btn btn-primary" (click)="enviar()">
+            Enviar
+          </button>
+          <button title="Volver" class="btn btn-sm btn-light" (click)="this.location.back();">
+            Volver
+          </button>
+        </div>
+      </form>
+
+    </div>
+    <div class="col-md-6">
+      <div class=" d-flex justify-content-center alig h-100">
+        <img class="d-block logo align-self-center" [src]="'assets/logo.png'" [alt]="'Logo de la aplicación'">
+      </div>
+    </div>
+  </section>
+</main>
