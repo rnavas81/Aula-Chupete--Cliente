@@ -71,7 +71,7 @@ export class MainParentComponent implements OnInit {
     this.alumnoService.getAulas(this.alumno.id).subscribe(
       (response:any)=>{
         this.aulas=response;
-        this.aulaSelected=this.aulas[0].id;
+        this.aulaSelected=this.aulas.find(x=>x.default==1).id;
         this.cambiarFecha(this.fecha);
       }, (error:any) =>{
         if(error.status==403)this.userService.exit();

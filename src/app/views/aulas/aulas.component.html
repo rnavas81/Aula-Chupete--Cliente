@@ -3,21 +3,21 @@
 <!-- TOAST -->
 <app-toast [toast]="this.toast"></app-toast>
 
-<!-- BARRA DE HERRAMIENTAS -->
-<nav id="toolbar" class="btn-toolbar justify-content-between p-2 d-flex ">
-  <div class="btn-group">
-    <p class="align-self-center m-0 font-weight-bold text-black-50 text-uppercase">Lista de aulas</p>
-  </div>
-  <div class="btn-group">
-    <button title="Agregar aula" class="btn btn-sm btn-light" routerLink="/aulas/formulario"
-      [class.disabled]="isLoading">
-      <i class="fas fa-plus"></i>
-    </button>
-  </div>
-</nav>
 
 <!-- CUERPO -->
-<main class="container-fluid">
+<main class="">
+  <!-- BARRA DE HERRAMIENTAS -->
+  <nav id="toolbar" class="btn-toolbar justify-content-between p-2 d-flex ">
+    <div class="btn-group">
+      <p class="align-self-center m-0 font-weight-bold text-black-50 text-uppercase">Lista de aulas</p>
+    </div>
+    <div class="btn-group">
+      <button title="Agregar aula" class="btn btn-sm btn-light" routerLink="/aulas/formulario"
+        [class.disabled]="isLoading">
+        <i class="fas fa-plus"></i>
+      </button>
+    </div>
+  </nav>
   <table class="table">
     <thead>
       <tr>

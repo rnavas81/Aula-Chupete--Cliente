@@ -243,8 +243,6 @@ export class DietariosComponent implements OnInit {
       this.dietarioService.asignarMenu(this.aulaSelected, idMenu, this.fecha.format('Y-MM-DD')).subscribe(
         (response: any) => {
           document.getElementById('cargar-menu-close').click();
-          console.log(response);
-
           this.dietario = response;
           this.dietarioView = this.dietarioService.formatear(this.dietario, this.fecha);
         }, (error: any) => {

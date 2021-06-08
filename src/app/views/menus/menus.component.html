@@ -2,22 +2,22 @@
 <app-header></app-header>
 <!-- TOAST -->
 <app-toast [toast]="this.toast"></app-toast>
-<!-- BARRA DE HERRAMIENTAS -->
-<nav id="toolbar" class="btn-toolbar justify-content-between ">
-  <div class="btn-group p-2 pl-3">
-    <p class="align-self-center m-0 font-weight-bold text-black-50 text-uppercase">Mis menús</p>
-  </div>
-  <div class="btn-group p-2 pr-3">
-    <button title="Agregar menú" class="btn btn-sm btn-light" routerLink="/menus/formulario"
-      [class.disabled]="isLoading">
-      <i class="fas fa-plus"></i>
-    </button>
-  </div>
-</nav>
 <!-- CUERPO -->
-<main class="container-xl">
-  <div class="row">
-    <table class="col-12 table">
+<main class="">
+  <!-- BARRA DE HERRAMIENTAS -->
+  <nav id="toolbar" class="btn-toolbar justify-content-between p-2 pr-4 d-flex ">
+    <div class="btn-group p-2 pl-3">
+      <p class="align-self-center m-0 font-weight-bold text-black-50 text-uppercase">Mis menús</p>
+    </div>
+    <div class="btn-group p-2 pr-3">
+      <button title="Agregar menú" class="btn btn-sm btn-light" routerLink="/menus/formulario"
+        [class.disabled]="isLoading">
+        <i class="fas fa-plus"></i>
+      </button>
+    </div>
+  </nav>
+  <div class="">
+    <table class="table">
       <thead>
         <tr>
           <th scope="col">Nombre</th>

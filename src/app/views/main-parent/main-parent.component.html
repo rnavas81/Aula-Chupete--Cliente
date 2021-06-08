@@ -22,7 +22,7 @@
       class="align-self-center font-weight-bold text-black-50 text-uppercase cursor-default">{{aulas[0].name}}
       ({{aulas[0].year}}/{{aulas[0].year+1}})</p>
     <select class="form-control" *ngIf="aulas.length>1" (change)="cambiarAula($event.target.value)" placeholder='Las aulas'>
-      <option *ngFor="let item of aulas;index as i" [value]="item.id">{{item.name}} ({{item.year}}/{{item.year+1}})
+      <option *ngFor="let item of aulas;index as i" [value]="item.id" [attr.selected]="item.default==1">{{item.name}} ({{item.year}}/{{item.year+1}})
       </option>
     </select>
   </div>

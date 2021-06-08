@@ -116,8 +116,10 @@ export class MainTeacherComponent implements OnInit {
   cargarDiario() {
     this.aulaService.getDiario(this.aula.id, this.date.format('Y-MM-DD')).subscribe(
       (response: any) => {
-        this.title = response.title;
-        this.content = response.content;
+        var item = <HTMLTextAreaElement>document.getElementById('title');
+        item.value = !!response.title?response.title:'';
+        item = <HTMLTextAreaElement>document.getElementById('content');
+        item.value = !!response.content?response.content:'';
         this.faltas = [];
         this.idDiario = response.id;
         if(response.entradas){

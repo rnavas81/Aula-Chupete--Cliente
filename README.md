@@ -35,9 +35,9 @@ Si en la máquina donde va a ejecutar la aplicación tiene instalado git puede e
 
     *git clone https://github.com/rnavas81/Aula-Chupete--Cliente*
 
-3. Situese dentro de la carpeta Aula-Chupetes--Cliente
+3. Situese dentro de la carpeta Aula-Chupete--Cliente
 
-    *cd Aula-Chupetes--Cliente*
+    *cd Aula-Chupete--Cliente*
 
 4. Lance el comando para inicializar el contenedor docker
 

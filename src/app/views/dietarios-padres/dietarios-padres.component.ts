@@ -79,13 +79,20 @@ export class DietariosPadresComponent implements OnInit {
     this.cambiarDia();
     return;
   }
+  cambiarAula(nuevaAula){
+    if(this.aulas.find(x=>x.id==nuevaAula)){
+      this.aulaSelected = nuevaAula;
+      this.cargarDietario();
+    }
+  }
   cargarAlumno(nuevoId=0){
     this.alumno = this.alumnos.find(x=>x.id==nuevoId);
     this.dietario = [];
     this.alumnoService.getAulas(this.alumno.id).subscribe(
       (response:any)=>{
         this.aulas=response;
-        this.aulaSelected=this.aulas[0].id;
+        var aula = this.aulas.find(x=>x.default==1);
+        this.aulaSelected= aula?aula.id:this.aulas[0].id;
         this.cargarDietario();
       }, (error:any) =>{
         if(error.status==403)this.userService.exit();

@@ -1,23 +1,23 @@
 <!-- CABECERA -->
 <app-header></app-header>
 
-<!-- BARRA DE HERRAMIENTAS -->
-<nav id="toolbar" class="btn-toolbar justify-content-between p-2 d-flex ">
-  <div class="btn-group">
-    <p class="align-self-center m-0 font-weight-bold text-black-50 text-uppercase">Lista de alumnos</p>
-  </div>
-  <div class="btn-group d-flex">
-  </div>
-  <div class="btn-group">
-    <button title="Agregar alumno" class="btn btn-sm btn-light" routerLink="/alumnos/formulario"
-      [class.disabled]="isLoading">
-      <i class="fas fa-plus"></i>
-    </button>
-  </div>
-</nav>
 
 <!-- CUERPO -->
-<main class="container-fluid">
+<main class="">
+  <!-- BARRA DE HERRAMIENTAS -->
+  <nav id="toolbar" class="btn-toolbar justify-content-between p-2 pr-4 d-flex ">
+    <div class="btn-group">
+      <p class="align-self-center m-0 font-weight-bold text-black-50 text-uppercase">Lista de alumnos</p>
+    </div>
+    <div class="btn-group d-flex">
+    </div>
+    <div class="btn-group">
+      <button title="Agregar alumno" class="btn btn-sm btn-light" routerLink="/alumnos/formulario"
+        [class.disabled]="isLoading">
+        <i class="fas fa-plus"></i>
+      </button>
+    </div>
+  </nav>
   <table class="table">
     <thead>
       <tr>
@@ -31,7 +31,7 @@
       <tr *ngFor="let item of this.alumnos" [attr.idRow]="item.id">
         <td>{{item.name}}</td>
         <td>{{item.lastname}}</td>
-        <td>{{item.birthday}}</td>
+        <td>{{fechalocal(item.birthday)}}</td>
         <td class="min">
           <button type="button" class="btn btn-sm btn-primary mx-1 rounded-pill" routerLink="/alumnos/formulario"
             fragment="{{item.id}}" title="Editar datos del alumno">

@@ -81,7 +81,6 @@ export class MenusFormularioComponent implements OnInit {
         this.initData.dias.push(dia);
       }
       this.semana = JSON.parse(JSON.stringify(this.initData));
-      console.log(this.initData);
 
     }
   }
@@ -103,7 +102,6 @@ export class MenusFormularioComponent implements OnInit {
   }
 
   cambiarNombre(nombre) {
-    console.log('cambiarNombre', nombre.trim());
     this.semana.name = nombre.trim();
   }
 
@@ -138,7 +136,6 @@ export class MenusFormularioComponent implements OnInit {
     this.route.navigate(['/menus']);
   }
   deshacer() {
-    console.log(this.semana, this.initData);
     this.semana = JSON.parse(JSON.stringify(this.initData))
   }
 
@@ -178,8 +175,6 @@ export class MenusFormularioComponent implements OnInit {
       const index = this.semana.dias.findIndex(x => x.id == this.modalData.id);
       this.semana.dias[index][this.modalData.comida] = this.form.get('plato').value;
       this.semana.dias[index][this.modalData.comida + "_allergens"] = alergenos;
-      console.log();
-
       document.getElementById('editarComidaModal-close').click();
     }
 

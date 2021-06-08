@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import * as moment from 'moment';
 import { AlumnosService } from 'src/app/services/alumnos.service';
 import { UserService } from 'src/app/services/user.service';
 
@@ -31,6 +32,16 @@ export class AlumnosComponent implements OnInit {
         if(error.status==403)this.userService.exit();
       }
     )
+  }
+  fechalocal(fecha){
+    try {
+      var f = moment(fecha);
+      if(f.isValid())return f.format('DD-MM-Y');
+      else return "";
+
+    } catch (error) {
+      return "";
+    }
   }
 
   eliminar() {
